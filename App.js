@@ -5,9 +5,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import FirstScreen from "./src/screens/firstScreen";
-import OnboardingScreen from "./src/screens/onboardingScreen";
+
 import SecondScreen from "./src/screens/secondScreen";
 import HomeScreen from "./src/screens/homeScreen";
+import OnboardingScreen from "./src/screens/OnboardingScreen";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -39,11 +40,11 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
