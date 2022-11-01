@@ -1,16 +1,28 @@
 import React, { useState } from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { TextInput } from "react-native-paper";
+import { TextInput, IconButton } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import axios from "axios";
 import PascalCase from "../components/PascalCase";
+import DonatorCard from "../components/donator/DonatorCard";
+import { useNavigation } from "@react-navigation/native";
 
-export default function SecondScreen({ navigation }) {
+export default function SecondScreen() {
   const [image, setImage] = useState(null);
   var image1;
   var res;
+  var imageUri;
+  const navigation = useNavigation();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -29,15 +41,18 @@ export default function SecondScreen({ navigation }) {
     res = {
       base64: imageUri,
     };
-
-    await axios
-      .post("http://192.168.8.134:8070/donator/test", res)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // try {
+    //   await axios
+    //     .post("http://192.168.8.134:8070/donator/test", res)
+    //     .then((result) => {
+    //       console.log(result);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    // }
 
     // imageUri && console.log({ uri: imageUri.slice(0, 100) });
 
@@ -47,7 +62,7 @@ export default function SecondScreen({ navigation }) {
   };
 
   let btnsbmit = async () => {
-    console.log(image1);
+    navigation.navigate("allDonations");
   };
 
   var styles = StyleSheet.create({
@@ -86,32 +101,29 @@ export default function SecondScreen({ navigation }) {
   return (
     <View
       style={{
-        backgroundColor: "#FFFFFF",
+        // marginTop: 20,
+        paddingTop: 10,
+        backgroundColor: "white",
+        paddingBottom: 20,
       }}
     >
-      <Text
-        style={{
-          fontWeight: "600",
-          color: "#111010",
-          // marginLeft: "32",
-          paddingLeft: 30,
-        }}
-      >
-        Your Name
+      <View style={{ flexDirection: "row" }}>
+        <IconButton icon="account-multiple" />
         <Text
           style={{
-            color: "red",
+            marginTop: 15,
+            marginLeft: 100,
           }}
         >
-          *
+          All donations
         </Text>
-      </Text>
+      </View>
       <TextInput
         mode="outlined"
         activeOutlineColor="black"
         outlineColor="#9FA5AA"
         // label="Name"
-        label="Name"
+        label="Seaxzsssssxrch"
         left={
           <TextInput.Icon
             icon="eye"
@@ -127,10 +139,21 @@ export default function SecondScreen({ navigation }) {
           width: 347,
           height: 47,
           marginLeft: 23,
-          backgroundColor: "white",
+          backgroundColor: "#F6F6F6",
         }}
       ></TextInput>
-      <Text
+
+      <ScrollView
+        // stickyHeaderIndices={[0]}
+        style={{
+          backgroundColor: "#FFFFFF",
+          // marginTop: 10,
+          paddingLeft: 10,
+          paddingTop: 20,
+        }}
+      >
+        <ActivityIndicator size="large" color="#1FBB61" />
+        {/* <Text
         style={{
           fontWeight: "600",
           color: "#111010",
@@ -146,39 +169,82 @@ export default function SecondScreen({ navigation }) {
         >
           *
         </Text>
-      </Text>
-      <TextInput
-        mode="outlined"
-        activeOutlineColor="black"
-        outlineColor="#9FA5AA"
-        // label="Name"
-        // label="Name"
-        placeholder="NAme"
-        left={
-          <TextInput.Icon
-            icon="eye"
-            color="#ADB2B6"
+      </Text> */}
+        <TextInput
+          mode="outlined"
+          activeOutlineColor="black"
+          outlineColor="#9FA5AA"
+          // label="Name"
+          label="Name"
+          left={
+            <TextInput.Icon
+              icon="eye"
+              color="#ADB2B6"
+              style={
+                {
+                  // paddingTop: 10,
+                  // width: 20,
+                  // height: 20,
+                }
+              }
+            />
+          }
+          style={{
+            width: 347,
+            height: 47,
+            marginLeft: 23,
+            backgroundColor: "white",
+          }}
+        ></TextInput>
+        <Text
+          style={{
+            fontWeight: "600",
+            color: "#111010",
+            // marginLeft: "32",
+            paddingLeft: 30,
+          }}
+        >
+          Your Name
+          <Text
             style={{
-              paddingTop: 10,
+              color: "red",
             }}
-          />
-        }
-        style={{
-          width: 347,
-          height: 47,
-          marginLeft: 23,
-          backgroundColor: "white",
-        }}
-      ></TextInput>
+          >
+            *
+          </Text>
+        </Text>
+        <TextInput
+          mode="outlined"
+          activeOutlineColor="black"
+          outlineColor="#9FA5AA"
+          // label="Name"
+          // label="Name"
+          placeholder="NAme"
+          left={
+            <TextInput.Icon
+              icon="eye"
+              color="#ADB2B6"
+              style={{
+                paddingTop: 10,
+              }}
+            />
+          }
+          style={{
+            width: 347,
+            height: 47,
+            marginLeft: 23,
+            backgroundColor: "white",
+          }}
+        ></TextInput>
 
-      {/* <Text>Dsd</Text>
+        {/* <Text>Dsd</Text>
 
       <Text>Dsd</Text>
       <Text>Dsd</Text>
       <Text>Dsd</Text> */}
 
-      <Button title="Go back" onPress={() => btnsbmit()} />
-      {/* <View style={styles.centering}>
+        <Button title="Go back" onPress={() => btnsbmit()} />
+        {/* <View style={styles.centering}>
         <LinearGradient
           // Button Linear Gradient
           colors={["rgba(19, 177, 86, 1)", "rgba(50, 203, 115, 1)"]}
@@ -187,13 +253,24 @@ export default function SecondScreen({ navigation }) {
           <Text style={styles.text}>Send Request</Text>
         </LinearGradient>
       </View> */}
-      <PascalCase />
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        )}
-      </View>
+        <PascalCase />
+        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
+        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
+
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <Button title="Pick an image from camera roll" onPress={pickImage} />
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 200, height: 200 }}
+            />
+          )}
+        </View>
+        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
+        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
+        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
+        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
+      </ScrollView>
     </View>
   );
 }
