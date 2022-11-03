@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, Text, View } from "react-native";
 import { FAB, IconButton, TextInput } from "react-native-paper";
 import { getHomeDonations } from "../../api/donator.api";
 import { getAllDonations } from "../../api/home.api";
 import DonatorCard from "../../components/donator/DonatorCard";
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const AllDonations = () => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
   const [searchTerm, setsearchTerm] = useState("");
@@ -15,11 +18,14 @@ const AllDonations = () => {
     setLoading(true);
     getHomeDonations()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDonations(res.data);
         setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
+
+        Alert.alert("An Error Occoured");
         console.log(err.response);
       });
   }, []);
@@ -35,15 +41,19 @@ const AllDonations = () => {
     );
   }, [searchTerm, donations]);
 
+  const navigateToDonationCreate = () => {
+    navigation.navigate("createDonation");
+  };
+
   return (
     <View
       style={{
-        marginTop: 20,
+        // marginTop: 20,
         backgroundColor: "white",
         height: "100%",
       }}
     >
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", marginTop: 20 }}>
         <IconButton
           icon="arrow-left"
           style={{
@@ -60,20 +70,20 @@ const AllDonations = () => {
         >
           All donations
         </Text>
-        <View
+
+        <AntDesign
+          onPress={navigateToDonationCreate}
+          name="pluscircleo"
+          size={24}
+          color="black"
           style={{
-            borderRadius: 50,
-            width: 40,
-            height: 40,
-            backgroundColor: "grey",
-            marginLeft: 60,
-            marginTop: 10,
+            marginLeft: 75,
+            marginTop: 18,
           }}
-        >
-          <IconButton icon="plus" style={{ width: 30, height: 30 }} />
-        </View>
+        />
       </View>
       <TextInput
+        theme={{ roundness: 100 }}
         mode="outlined"
         activeOutlineColor="black"
         outlineColor="#9FA5AA"
@@ -82,7 +92,7 @@ const AllDonations = () => {
         onChangeText={(value) => setsearchTerm(value)}
         left={
           <TextInput.Icon
-            icon="eye"
+            icon="text-search"
             color="#ADB2B6"
             style={{
               paddingTop: 10,
@@ -96,11 +106,18 @@ const AllDonations = () => {
           height: 47,
           marginLeft: 23,
           backgroundColor: "#F6F6F6",
+          marginBottom: 20,
+          borderRadius: 100,
         }}
       ></TextInput>
       <View>
         {loading ? (
-          <ActivityIndicator />
+          <ActivityIndicator
+            size="large"
+            style={{
+              marginTop: 300,
+            }}
+          />
         ) : donations.length == 0 ? (
           <Text>No items</Text>
         ) : donations.length > 0 && showingFunds.length == 0 ? (
@@ -112,6 +129,7 @@ const AllDonations = () => {
                 {donations.map((donation) => (
                   <DonatorCard
                     key={donation._id}
+                    donationId={donation._id}
                     imageUrl={donation.donationImage}
                     requests={donation.numberOfRequests}
                     location={donation.location}

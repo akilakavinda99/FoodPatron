@@ -4,14 +4,14 @@ import styles from "./styles/DonationViewImageStyles";
 import { BlurView } from "expo-blur";
 import { Button, Chip } from "react-native-paper";
 
-export default function DonationViewImage() {
+export default function DonationViewImage(props) {
   return (
     <View>
       <ImageBackground
         style={{ width: "100%", height: 300, zIndex: 1 }}
         resizeMode="cover"
         source={{
-          uri: "https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png",
+          uri: props.image,
         }}
       >
         <View
@@ -38,7 +38,7 @@ export default function DonationViewImage() {
           ></Button>
         </View>
         <BlurView intensity={100} style={styles.box} tint="default">
-          <Text style={styles.header}>Food donation for children</Text>
+          <Text style={styles.header}>{props.title}</Text>
           <Chip icon="coffee-maker-check-outline" style={styles.chip}>
             Approved
           </Chip>
@@ -52,7 +52,7 @@ export default function DonationViewImage() {
                 color: "green",
               }}
             >
-              <Text style={{ color: "black" }}>Galle</Text>
+              <Text style={{ color: "black" }}>{props.location}</Text>
             </Button>
             <Button
               icon="account-multiple"
@@ -69,7 +69,7 @@ export default function DonationViewImage() {
                   color: "black",
                 }}
               >
-                20
+                {props.requests}
               </Text>
             </Button>
           </View>
