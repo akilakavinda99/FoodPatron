@@ -8,7 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function DonationView({ route }) {
   const { donationId } = route.params;
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [donation, setDonation] = useState({});
   useEffect(() => {
     setLoading(true);
@@ -40,7 +40,12 @@ export default function DonationView({ route }) {
             marginTop: 50,
           }}
         >
-          <ActivityIndicator />
+          <ActivityIndicator
+            size="large"
+            style={{
+              marginTop: 300,
+            }}
+          />
         </View>
       ) : (
         <>

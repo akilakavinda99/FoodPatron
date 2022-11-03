@@ -1,0 +1,1 @@
+const createDonationStyles = StyleSheet.create({});
