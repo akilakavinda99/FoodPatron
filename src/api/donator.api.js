@@ -7,3 +7,5 @@ const API = axios.create({
 });
 
 export const getHomeDonations = () => API.get(`/getDonations`);
+export const getOneDonation = (donationId) =>
+  API.get(`/getOneDonation/${donationId}`);

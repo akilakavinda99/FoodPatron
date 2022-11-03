@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, Text, View } from "react-native";
 import { FAB, IconButton, TextInput } from "react-native-paper";
 import { getHomeDonations } from "../../api/donator.api";
 import { getAllDonations } from "../../api/home.api";
@@ -15,11 +15,14 @@ const AllDonations = () => {
     setLoading(true);
     getHomeDonations()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDonations(res.data);
         setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
+
+        Alert.alert("An Error Occoured");
         console.log(err.response);
       });
   }, []);
@@ -96,6 +99,7 @@ const AllDonations = () => {
           height: 47,
           marginLeft: 23,
           backgroundColor: "#F6F6F6",
+          marginBottom: 20,
         }}
       ></TextInput>
       <View>
@@ -112,6 +116,7 @@ const AllDonations = () => {
                 {donations.map((donation) => (
                   <DonatorCard
                     key={donation._id}
+                    donationId={donation._id}
                     imageUrl={donation.donationImage}
                     requests={donation.numberOfRequests}
                     location={donation.location}

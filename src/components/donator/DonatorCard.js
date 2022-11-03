@@ -10,12 +10,15 @@ export default function DonatorCard({
   description,
   requests,
   location,
+  donationId,
 }) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.mainView}
-      onPress={() => navigation.navigate("donationView")}
+      onPress={() =>
+        navigation.navigate("donationView", { donationId: donationId })
+      }
     >
       <View style={styles.mainRow}>
         <Image
