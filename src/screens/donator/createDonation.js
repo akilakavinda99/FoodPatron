@@ -1,15 +1,61 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { Button, Checkbox, TextInput } from "react-native-paper";
+import { createDonationRequest } from "../../api/donator.api";
 import CreateDonationInput from "../../components/donator/CreateDonationInput";
 import ImageUpload from "../../components/donator/ImageUpload";
 import InputName from "../../components/donator/InputName";
+import pickImage from "../../utils/imageConverter";
 
 const CreateDonation = () => {
+  const navigation = useNavigation();
   const [donationTitle, setDonationTitle] = useState("");
-  const [checked, setChecked] = React.useState(false);
-  // console.log("tjhis is title", donationTitle);
-  const createDonation = () => {};
+  const [location, setLocation] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactNumber, setNumber] = useState("");
+  const [donationDescription, setDescription] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [checked, setChecked] = useState(false);
+
+  const pickImageFromGallery = () => {
+    pickImage().then((res) => {
+      setSelectedImage(res);
+      //  console.log(res);
+    });
+  };
+  const createDonation = async () => {
+    const donation = {
+      userID: 12133,
+      donationTitle,
+      email,
+      contactNumber,
+      donationDescription,
+      location,
+      donationImage: selectedImage,
+      shareContactDetails: checked,
+    };
+
+    await createDonationRequest(donation)
+      .then((res) => {
+        Alert.alert("Sucess", res.data.message, [
+          { text: "OK", onPress: () => navigation.goBack() },
+        ]);
+        // console.log("this is from create ", res.data.message);
+      })
+      .catch((err) => {
+        Alert.alert("Error", err.response);
+      });
+    // console.log("this is reult", res);
+  };
   return (
     <ScrollView
       style={{
@@ -27,9 +73,9 @@ const CreateDonation = () => {
       <InputName text="Your Name" />
 
       <CreateDonationInput
-        placeholder="Your Name"
+        placeholder="Location"
         icon="account"
-        onChangeText={(value) => setDonationTitle(value)}
+        onChangeText={(value) => setLocation(value)}
       />
       <InputName text="Your Email" />
 
@@ -37,7 +83,7 @@ const CreateDonation = () => {
         placeholder="Your Email"
         icon="email"
         type="email-address"
-        onChangeText={(value) => setDonationTitle(value)}
+        onChangeText={(value) => setEmail(value)}
       />
       <InputName text="Your Contact Number" />
 
@@ -45,7 +91,9 @@ const CreateDonation = () => {
         placeholder="Your Contact Number"
         icon="phone"
         type="numeric"
-        onChangeText={(value) => setDonationTitle(value)}
+        maxLength={10}
+        minLength={10}
+        onChangeText={(value) => setNumber(value)}
       />
       <InputName text="Describe Your Donation" />
       <TextInput
@@ -59,10 +107,33 @@ const CreateDonation = () => {
           marginLeft: 23,
           backgroundColor: "white",
         }}
+        onChangeText={(value) => setDescription(value)}
       />
       <InputName text="Donation Image" />
-
-      <ImageUpload />
+      <View
+        style={{
+          flexDirection: "row",
+        }}
+      >
+        <TouchableOpacity onPress={pickImageFromGallery}>
+          <ImageUpload />
+        </TouchableOpacity>
+        {selectedImage != null && selectedImage != undefined ? (
+          <Image
+            style={{
+              width: 110,
+              height: 98,
+              marginLeft: 35,
+              marginTop: 13,
+            }}
+            source={{
+              uri: selectedImage,
+            }}
+          />
+        ) : (
+          <></>
+        )}
+      </View>
       <View
         style={{
           flexDirection: "row",
