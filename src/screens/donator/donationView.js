@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Text, View } from "react-native";
 import { Linking } from "react-native";
 import { Button } from "react-native-paper";
 import { getOneDonation } from "../../api/donator.api";
@@ -23,7 +23,7 @@ export default function DonationView({ route }) {
         })
         .catch((err) => {
           setLoading(false);
-
+          Alert.alert("Error Occured");
           console.log(err);
         });
     }
@@ -31,7 +31,7 @@ export default function DonationView({ route }) {
   }, []);
 
   const navigateToSendRequest = () => {
-    navigation.navigate("sendRequest");
+    navigation.navigate("sendRequest", { donationId: donation._id });
   };
   return (
     <View
