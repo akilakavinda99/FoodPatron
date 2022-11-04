@@ -12,3 +12,6 @@ export const createDonationRequest = (donation) =>
 
 export const getOneDonation = (donationId) =>
   API.get(`/getOneDonation/${donationId}`);
+
+export const sendDonationRequest = (request) =>
+  API.post(`/sendRequest`, request);
