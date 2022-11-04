@@ -12,6 +12,7 @@ import OnboardingScreen from "./src/screens/OnboardingScreen";
 import DonationView from "./src/screens/donator/donationView";
 import AllDonations from "./src/screens/donator/allDonations";
 import CreateDonation from "./src/screens/donator/createDonation";
+import SendRequest from "./src/screens/donator/sendRequest";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -56,6 +57,11 @@ export default function App() {
           name="createDonation"
           component={CreateDonation}
           options={{ title: "Lets create a donation" }}
+        />
+        <Stack.Screen
+          name="sendRequest"
+          component={SendRequest}
+          options={{ title: "Lets send a request" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

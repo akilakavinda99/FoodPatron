@@ -8,6 +8,7 @@ const CreateDonationInput = ({
   iconSize,
   length,
   type,
+  iconColor,
   ...rest
 }) => {
   return (
@@ -23,7 +24,7 @@ const CreateDonationInput = ({
       left={
         <TextInput.Icon
           icon={icon}
-          color="black"
+          color={iconColor != null ? iconColor : "black"}
           style={{
             paddingTop: 10,
           }}
