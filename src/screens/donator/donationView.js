@@ -5,8 +5,10 @@ import { Button } from "react-native-paper";
 import { getOneDonation } from "../../api/donator.api";
 import DonationViewImage from "../../components/donator/DonationViewImage";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function DonationView({ route }) {
+  const navigation = useNavigation();
   const { donationId } = route.params;
   const [loading, setLoading] = useState(true);
   const [donation, setDonation] = useState({});
@@ -27,6 +29,10 @@ export default function DonationView({ route }) {
     }
     getDonation(donationId);
   }, []);
+
+  const navigateToSendRequest = () => {
+    navigation.navigate("sendRequest");
+  };
   return (
     <View
       style={{
@@ -146,6 +152,7 @@ export default function DonationView({ route }) {
                 borderRadius: 32,
                 backgroundColor: "green",
               }}
+              onPress={navigateToSendRequest}
             >
               Send Request
             </Button>
