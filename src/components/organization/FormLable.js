@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 function FormLable({ title, required }) {
     return (
         <Text style={{
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: 'bold',
             color: '#56616F',
             paddingHorizontal: 20,
