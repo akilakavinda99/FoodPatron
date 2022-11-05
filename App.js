@@ -8,11 +8,16 @@ import FirstScreen from "./src/screens/firstScreen";
 
 import SecondScreen from "./src/screens/secondScreen";
 import HomeScreen from "./src/screens/homeScreen";
-import OnboardingScreen from "./src/screens/OnboardingScreen";
+
 import DonationView from "./src/screens/donator/donationView";
 import AllDonations from "./src/screens/donator/allDonations";
 import CreateDonation from "./src/screens/donator/createDonation";
 import SendRequest from "./src/screens/donator/sendRequest";
+import OnboardingScreen from "./src/screens/onboardingScreen";
+import DonationDashboard from "./src/screens/donator/donationDashboard";
+import MyDonations from "./src/screens/donator/myDonations";
+import PendingRequests from "./src/screens/donator/pendingRequests";
+import ApprovedRequests from "./src/screens/donator/approvedRequests";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -62,6 +67,32 @@ export default function App() {
           name="sendRequest"
           component={SendRequest}
           options={{ title: "Lets send a request" }}
+        />
+        <Stack.Screen
+          name="donationDashboard"
+          component={DonationDashboard}
+          options={{ title: "Donation Dashboard" }}
+        />
+        <Stack.Screen
+          name="myDonations"
+          component={MyDonations}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="pendingRequests"
+          component={PendingRequests}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="acceptedRequests"
+          component={ApprovedRequests}
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

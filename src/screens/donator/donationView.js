@@ -35,7 +35,7 @@ export default function DonationView({ route }) {
   }, []);
 
   const navigateToSendRequest = () => {
-    navigation.navigate("sendRequest", { donationID: donation._id });
+    navigation.navigate("donationDashboard", { donationID: donation._id });
   };
 
   return (
