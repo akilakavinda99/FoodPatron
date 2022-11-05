@@ -19,6 +19,7 @@ import MyDonations from "./src/screens/donator/myDonations";
 import PendingRequests from "./src/screens/donator/pendingRequests";
 import ApprovedRequests from "./src/screens/donator/approvedRequests";
 import OrgRegStepOne from "./src/screens/organization/registration/stepOne";
+import OrgRegStepTwo from "./src/screens/organization/registration/stepTwo";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -98,6 +99,11 @@ export default function App() {
         <Stack.Screen
           name="OrgRegStepOne"
           component={OrgRegStepOne}
+          options={{ title: "New Organization" }}
+        />
+        <Stack.Screen
+          name="OrgRegStepTwo"
+          component={OrgRegStepTwo}
           options={{ title: "New Organization" }}
         />
       </Stack.Navigator>
