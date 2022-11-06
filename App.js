@@ -1,10 +1,7 @@
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import FirstScreen from "./src/screens/firstScreen";
 
 import SecondScreen from "./src/screens/secondScreen";
 import HomeScreen from "./src/screens/homeScreen";
@@ -23,11 +20,26 @@ import OrgRegStepTwo from "./src/screens/organization/registration/stepTwo";
 import OrgRegStepThree from "./src/screens/organization/registration/stepThree";
 import OrgRegStepFour from "./src/screens/organization/registration/stepFour";
 import CreateOrganizationFund from "./src/screens/fund/createOrganizationFund";
+import OrganizationNavigation from "./src/components/organization/OrganizationNavigation";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
-  const [firstLaunch, setFirstLaunch] = React.useState(null);
-  React.useEffect(() => {
+  const [firstLaunch, setFirstLaunch] = useState(null);
+  const [userType, setUserType] = useState("organization");
+
+  // Show bottom tab bar only if the user is logged in
+  function MainTabs() {
+    if (userType === "individual") {
+      // Individual navigation bar
+    } else if (userType === "organization") {
+      // Organization navigation bar
+      return (<OrganizationNavigation />)
+    } else {
+      return null;
+    }
+  }
+
+  useEffect(() => {
     async function setData() {
       const appData = await AsyncStorage.getItem("appLaunched");
       if (appData == null) {
@@ -39,20 +51,39 @@ export default function App() {
     }
     setData();
   }, []);
+
+  useEffect(() => {
+    async function setUserType() {
+
+      const value = await AsyncStorage.getItem("userType");
+      if (value !== null) {
+        setUserType(value);
+      }
+    }
+    setUserType();
+  }, [])
+
   const Stack = createNativeStackNavigator();
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {firstLaunch ? (
           <Stack.Screen name="first" component={OnboardingScreen} />
         ) : (
+          // <Stack.Screen
+          //   name="second"
+          //   component={SecondScreen}
+          //   options={{ headerShown: false }}
+          // />
           <Stack.Screen
-            name="second"
-            component={SecondScreen}
+            name="Home"
+            component={MainTabs}
             options={{ headerShown: false }}
           />
         )}
         <Stack.Screen name="st" component={HomeScreen} />
+
         <Stack.Screen
           name="donationView"
           component={DonationView}
