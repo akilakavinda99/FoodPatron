@@ -18,3 +18,6 @@ export const sendDonationRequest = (request) =>
 
 export const getUserDonation = (userId) =>
   API.get(`/getUserDonations/${userId}`);
+
+export const markDonationCompleted = (donationId) =>
+  API.put(`/markAsCompleted/${donationId}`);

@@ -1,8 +1,18 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Image, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Text,
+  Alert,
+} from "react-native";
 import { Chip } from "react-native-paper";
 import styles from "./styles/DonatorCardStyles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useNavigation } from "@react-navigation/native";
+import EditDonation from "../../screens/donator/editDonation";
+import { markDonationCompleted } from "../../api/donator.api";
 
 const MyDonationCard = ({
   imageUrl,
@@ -12,7 +22,40 @@ const MyDonationCard = ({
   location,
   donationId,
   status,
+  donation,
+  onMark,
 }) => {
+  const navigation = useNavigation();
+  const navigateToEdit = () => {
+    // return <EditDonation donations={donation} />;
+    navigation.navigate("editDonation", { donation: donation });
+  };
+
+  const markAsCompleted = () => {
+    Alert.alert("Mark donation completed", "Are you sure?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("OK Pressed"),
+      },
+
+      {
+        text: "OK",
+        onPress: () => {
+          onMark(true);
+          markDonationCompleted(donation._id)
+            .then((res) => {
+              onMark(false);
+              Alert.alert("success", "Donation Successfully Completed");
+            })
+            .catch((err) => {
+              console.log(err.response);
+              onMark(false);
+            });
+        },
+      },
+    ]);
+    // onMark(true);
+  };
   return (
     <View>
       <TouchableOpacity
@@ -76,7 +119,7 @@ const MyDonationCard = ({
                     />
                   )}
                   // icon="checkbox-marked-circle-outline"
-                  onPress={() => console.log("Pressed")}
+                  onPress={markAsCompleted}
                   style={{
                     width: 168,
                     marginLeft: 25,
@@ -101,7 +144,7 @@ const MyDonationCard = ({
                   </Chip>
                   <Chip
                     icon="square-edit-outline"
-                    onPress={() => console.log("Pressed")}
+                    onPress={navigateToEdit}
                     style={{
                       width: 85,
                       marginLeft: 23,

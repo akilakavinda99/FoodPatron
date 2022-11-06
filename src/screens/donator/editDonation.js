@@ -16,9 +16,11 @@ import ImageUpload from "../../components/donator/ImageUpload";
 import InputName from "../../components/donator/InputName";
 import pickImage from "../../utils/imageConverter";
 
-const CreateDonation = () => {
+const EditDonation = ({ route }) => {
+  const { donation } = route.params;
+  console.log("this is donation", donation);
   const navigation = useNavigation();
-  const [donationTitle, setDonationTitle] = useState("");
+  const [donationTitle, setDonationTitle] = useState(donation.donationTitle);
   const [location, setLocation] = useState("");
   const [email, setEmail] = useState("");
   const [contactNumber, setNumber] = useState("");
@@ -69,6 +71,7 @@ const CreateDonation = () => {
         iconSize="20"
         length={30}
         onChangeText={(value) => setDonationTitle(value)}
+        value={donationTitle}
       />
       <InputName text="Your Name" />
 
@@ -200,4 +203,4 @@ const CreateDonation = () => {
   );
 };
 
-export default CreateDonation;
+export default EditDonation;

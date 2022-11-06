@@ -62,7 +62,7 @@ export default function SecondScreen() {
   };
 
   let btnsbmit = async () => {
-    navigation.navigate("CreateOrganizationFund");
+    navigation.navigate("allDonations");
   };
 
   var styles = StyleSheet.create({

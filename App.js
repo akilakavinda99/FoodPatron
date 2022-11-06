@@ -21,6 +21,7 @@ import OrgRegStepThree from "./src/screens/organization/registration/stepThree";
 import OrgRegStepFour from "./src/screens/organization/registration/stepFour";
 import CreateOrganizationFund from "./src/screens/fund/createOrganizationFund";
 import OrganizationNavigation from "./src/components/organization/OrganizationNavigation";
+import EditDonation from "./src/screens/donator/editDonation";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -33,7 +34,7 @@ export default function App() {
       // Individual navigation bar
     } else if (userType === "organization") {
       // Organization navigation bar
-      return (<OrganizationNavigation />)
+      return <OrganizationNavigation />;
     } else {
       return null;
     }
@@ -54,14 +55,13 @@ export default function App() {
 
   useEffect(() => {
     async function setUserType() {
-
       const value = await AsyncStorage.getItem("userType");
       if (value !== null) {
         setUserType(value);
       }
     }
     setUserType();
-  }, [])
+  }, []);
 
   const Stack = createNativeStackNavigator();
 
@@ -154,6 +154,11 @@ export default function App() {
           name="CreateOrganizationFund"
           component={CreateOrganizationFund}
           options={{ title: "Create new fund" }}
+        />
+        <Stack.Screen
+          name="editDonation"
+          component={EditDonation}
+          options={{ title: "Edit your donation" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
