@@ -21,3 +21,9 @@ export const getUserDonation = (userId) =>
 
 export const markDonationCompleted = (donationId) =>
   API.put(`/markAsCompleted/${donationId}`);
+
+export const getPendingRequests = (donationId) =>
+  API.get(`/getPendingRequests/${donationId}`);
+
+export const getAcceptedRequests = (donationId) =>
+  API.get(`/getApprovedRequests/${donationId}`);
