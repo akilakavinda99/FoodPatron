@@ -17,7 +17,7 @@ function OrganizationFunds() {
             <CustomeSearchBar />
             <FundFilterChips />
             <ScrollView style={{
-                marginVertical: 10,
+                marginTop: 10,
             }}>
                 {/* <Text style={{
                     fontSize: 16,

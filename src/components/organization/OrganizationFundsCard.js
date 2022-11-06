@@ -11,14 +11,14 @@ function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised 
             marginVertical: 10,
             marginHorizontal: 20,
             flexDirection: 'row',
-            height: 150,
+            height: 140,
             elevation: 5,
             borderColor: "#E8E8E8",
         }}>
             <Image
                 style={{
                     flex: 1,
-                    height: 150,
+                    height: 140,
                     borderRadius: 10,
                 }}
                 resizeMode="cover"
@@ -39,7 +39,7 @@ function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised 
                 }}>{title}</Text>
 
                 <Text
-                    numberOfLines={4}
+                    numberOfLines={3}
                     style={{
                         fontSize: 13,
                         fontWeight: "300",

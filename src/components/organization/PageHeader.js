@@ -8,7 +8,6 @@ function PageHeader({ title, icon }) {
     return (
         <SafeAreaView style={{
             backgroundColor: "#fff",
-            fontSize: 26,
             paddingLeft: 20,
             paddingVertical: 10,
         }}>
@@ -16,9 +15,9 @@ function PageHeader({ title, icon }) {
                 flexDirection: 'row',
                 alignItems: 'center',
             }}>
-                <FAcon name={icon} color='#13B156' size={26} />
+                <FAcon name={icon} color='#13B156' size={24} />
                 <Text style={{
-                    fontSize: 26,
+                    fontSize: 24,
                     marginLeft: 20,
                     fontWeight: "500",
                 }}>{title}</Text>
