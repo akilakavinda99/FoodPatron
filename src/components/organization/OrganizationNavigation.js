@@ -2,6 +2,7 @@ import React from 'react'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import OrgRegStepOne from '../../screens/organization/registration/stepOne';
+import OrganizationFunds from '../../screens/organization/organizationFunds';
 
 function OrganizationNavigation() {
     // Instanciate bottom tab.
@@ -48,7 +49,7 @@ function OrganizationNavigation() {
             />
             <Tab.Screen
                 name="OrgFunds"
-                component={OrgRegStepOne}
+                component={OrganizationFunds}
                 options={{
                     headerShown: false,
                     title: 'Funds',
