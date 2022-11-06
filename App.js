@@ -22,6 +22,7 @@ import OrgRegStepOne from "./src/screens/organization/registration/stepOne";
 import OrgRegStepTwo from "./src/screens/organization/registration/stepTwo";
 import OrgRegStepThree from "./src/screens/organization/registration/stepThree";
 import OrgRegStepFour from "./src/screens/organization/registration/stepFour";
+import CreateOrganizationFund from "./src/screens/fund/createOrganizationFund";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -117,6 +118,11 @@ export default function App() {
           name="OrgRegStepFour"
           component={OrgRegStepFour}
           options={{ title: "New Organization" }}
+        />
+        <Stack.Screen
+          name="CreateOrganizationFund"
+          component={CreateOrganizationFund}
+          options={{ title: "Create new fund" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
