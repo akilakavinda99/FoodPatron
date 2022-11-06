@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Alert, ScrollView } from "react-native";
-import { ActivityIndicator, IconButton, TextInput } from "react-native-paper";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+import { IconButton, TextInput } from "react-native-paper";
 import { getUserDonation } from "../../api/donator.api";
 import PendingReqCard from "../../components/donator/pendingReqCard";
 
-const PendingRequestss = () => {
+const AcceptedRequests = ({ route }) => {
   const userId = "63425985a2f0b4b546de6621";
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
@@ -41,7 +47,7 @@ const PendingRequestss = () => {
               fontSize: 20,
             }}
           >
-            Pending Requests
+            Accepted Requests
           </Text>
         </View>
         <TextInput
@@ -85,7 +91,7 @@ const PendingRequestss = () => {
                     title={donation.donationTitle}
                     description={donation.donationDescription}
                     donationId={donation._id}
-                    fromAccepted={false}
+                    fromAccepted={true}
                   />
                 );
               })}
@@ -99,4 +105,4 @@ const PendingRequestss = () => {
 
 const styles = StyleSheet.create({});
 
-export default PendingRequestss;
+export default AcceptedRequests;
