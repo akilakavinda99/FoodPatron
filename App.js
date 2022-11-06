@@ -13,7 +13,6 @@ import SendRequest from "./src/screens/donator/sendRequest";
 import OnboardingScreen from "./src/screens/onboardingScreen";
 import DonationDashboard from "./src/screens/donator/donationDashboard";
 import MyDonations from "./src/screens/donator/myDonations";
-import PendingRequests from "./src/screens/donator/pendingRequests";
 import ApprovedRequests from "./src/screens/donator/approvedRequests";
 import OrgRegStepOne from "./src/screens/organization/registration/stepOne";
 import OrgRegStepTwo from "./src/screens/organization/registration/stepTwo";
@@ -22,6 +21,7 @@ import OrgRegStepFour from "./src/screens/organization/registration/stepFour";
 import CreateOrganizationFund from "./src/screens/fund/createOrganizationFund";
 import OrganizationNavigation from "./src/components/organization/OrganizationNavigation";
 import EditDonation from "./src/screens/donator/editDonation";
+import PendingRequestss from "./src/screens/donator/pendingRequests";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -71,16 +71,16 @@ export default function App() {
         {firstLaunch ? (
           <Stack.Screen name="first" component={OnboardingScreen} />
         ) : (
-          // <Stack.Screen
-          //   name="second"
-          //   component={SecondScreen}
-          //   options={{ headerShown: false }}
-          // />
           <Stack.Screen
-            name="Home"
-            component={MainTabs}
+            name="second"
+            component={SecondScreen}
             options={{ headerShown: false }}
           />
+          // <Stack.Screen
+          //   name="Home"
+          //   component={MainTabs}
+          //   options={{ headerShown: false }}
+          // />
         )}
         <Stack.Screen name="st" component={HomeScreen} />
 
@@ -118,7 +118,7 @@ export default function App() {
         />
         <Stack.Screen
           name="pendingRequests"
-          component={PendingRequests}
+          component={PendingRequestss}
           options={{
             headerShown: false,
           }}
