@@ -83,7 +83,9 @@ const MyDonations = () => {
                   key={donation._id}
                   title={donation.donationTitle}
                   imageUrl={donation.donationImage}
-                  // status="completed"
+                  donation={donation}
+                  onMark={(value) => setLoading(value)}
+                  status={donation.status}
                 />
               );
             })}
