@@ -18,7 +18,7 @@ function OrgRegStepTwo({ navigation, route }) {
 
     const onPress = () => {
         console.log(orgData);
-        navigation.navigate("OrgRegStepTwo", { orgData: orgData })
+        navigation.navigate("OrgRegStepThree", { orgData: orgData })
     }
 
     return (

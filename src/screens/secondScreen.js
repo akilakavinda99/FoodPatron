@@ -62,7 +62,7 @@ export default function SecondScreen() {
   };
 
   let btnsbmit = async () => {
-    navigation.navigate("OrgRegStepOne");
+    navigation.navigate("CreateOrganizationFund");
   };
 
   var styles = StyleSheet.create({
