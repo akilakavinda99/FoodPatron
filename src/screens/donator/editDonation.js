@@ -21,13 +21,15 @@ const EditDonation = ({ route }) => {
   console.log("this is donation", donation);
   const navigation = useNavigation();
   const [donationTitle, setDonationTitle] = useState(donation.donationTitle);
-  const [location, setLocation] = useState("");
-  const [email, setEmail] = useState("");
-  const [contactNumber, setNumber] = useState("");
-  const [donationDescription, setDescription] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [checked, setChecked] = useState(false);
-
+  const [location, setLocation] = useState(donation.location);
+  const [email, setEmail] = useState(donation.email);
+  const [contactNumber, setNumber] = useState(donation.contactNumber);
+  const [donationDescription, setDescription] = useState(
+    donation.donationDescription
+  );
+  const [selectedImage, setSelectedImage] = useState(donation.donationImage);
+  const [checked, setChecked] = useState(donation.shareContactDetails);
+  console.log("thisis number ", contactNumber);
   const pickImageFromGallery = () => {
     pickImage().then((res) => {
       setSelectedImage(res);
@@ -79,6 +81,7 @@ const EditDonation = ({ route }) => {
         placeholder="Location"
         icon="account"
         onChangeText={(value) => setLocation(value)}
+        value={location}
       />
       <InputName text="Your Email" />
 
@@ -87,6 +90,7 @@ const EditDonation = ({ route }) => {
         icon="email"
         type="email-address"
         onChangeText={(value) => setEmail(value)}
+        value={email}
       />
       <InputName text="Your Contact Number" />
 
@@ -94,9 +98,10 @@ const EditDonation = ({ route }) => {
         placeholder="Your Contact Number"
         icon="phone"
         type="numeric"
-        maxLength={10}
-        minLength={10}
+        // maxLength={10}
+        // minLength={10}
         onChangeText={(value) => setNumber(value)}
+        value={contactNumber}
       />
       <InputName text="Describe Your Donation" />
       <TextInput
@@ -111,6 +116,7 @@ const EditDonation = ({ route }) => {
           backgroundColor: "white",
         }}
         onChangeText={(value) => setDescription(value)}
+        value={donationDescription}
       />
       <InputName text="Donation Image" />
       <View
