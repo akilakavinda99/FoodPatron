@@ -1,8 +1,10 @@
 import React from 'react'
+import FAcon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import OrgRegStepOne from '../../screens/organization/registration/stepOne';
 import OrganizationFunds from '../../screens/organization/organizationFunds';
+import CreateOrganizationFund from '../../screens/fund/createOrganizationFund';
 
 function OrganizationNavigation() {
     // Instanciate bottom tab.
@@ -17,7 +19,7 @@ function OrganizationNavigation() {
             }}>
             <Tab.Screen
                 name="HomeScreen"
-                component={OrgRegStepOne}
+                component={OrganizationFunds}
                 options={{
                     headerShown: false,
                     title: 'Home',
@@ -33,10 +35,12 @@ function OrganizationNavigation() {
             />
             <Tab.Screen
                 name="NewFund"
-                component={OrgRegStepOne}
+                component={CreateOrganizationFund}
                 options={{
-                    headerShown: false,
-                    title: 'New Fund',
+                    headerLeft: () => (
+                        <FAcon name='heart' color='#13B156' size={22} style={{ paddingLeft: 20 }} />
+                    ),
+                    title: 'Create new fund',
                     tabBarIcon: ({ color, size, focused }) => (
                         focused ?
                             <MIcon name="add-circle" color='#13B156' size={size} style={{ backgroundColor: '#E8F8EF', paddingHorizontal: 20, paddingVertical: 5, borderRadius: 20 }} />

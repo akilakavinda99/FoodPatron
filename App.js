@@ -25,6 +25,7 @@ import PendingRequestss from "./src/screens/donator/pendingRequests";
 import PendingReqViewCard from "./src/components/donator/pendingReqViewCard";
 import PendingReqView from "./src/screens/donator/pendingReqView";
 import AcceptedRequests from "./src/screens/donator/acceptedRequests";
+import ViewFundByOrganization from "./src/screens/fund/viewFundByOrganization";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -171,6 +172,11 @@ export default function App() {
         <Stack.Screen
           name="acceptedReq"
           component={AcceptedRequests}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="viewFundByOrg"
+          component={ViewFundByOrganization}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
