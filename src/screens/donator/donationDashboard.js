@@ -56,7 +56,7 @@ const DonationDashboard = () => {
     navigation.navigate("myDonations");
   };
   const navigateToAccepted = () => {
-    navigation.navigate("acceptedRequests");
+    navigation.navigate("acceptedReq");
   };
   const navigateToPending = () => {
     navigation.navigate("pendingRequests");

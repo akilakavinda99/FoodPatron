@@ -22,6 +22,9 @@ import CreateOrganizationFund from "./src/screens/fund/createOrganizationFund";
 import OrganizationNavigation from "./src/components/organization/OrganizationNavigation";
 import EditDonation from "./src/screens/donator/editDonation";
 import PendingRequestss from "./src/screens/donator/pendingRequests";
+import PendingReqViewCard from "./src/components/donator/pendingReqViewCard";
+import PendingReqView from "./src/screens/donator/pendingReqView";
+import AcceptedRequests from "./src/screens/donator/acceptedRequests";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -159,6 +162,16 @@ export default function App() {
           name="editDonation"
           component={EditDonation}
           options={{ title: "Edit your donation" }}
+        />
+        <Stack.Screen
+          name="pendingReqView"
+          component={PendingReqView}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="acceptedReq"
+          component={AcceptedRequests}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
