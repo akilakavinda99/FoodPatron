@@ -5,21 +5,38 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import OrgRegStepOne from '../../screens/organization/registration/stepOne';
 import OrganizationFunds from '../../screens/organization/organizationFunds';
 import CreateOrganizationFund from '../../screens/fund/createOrganizationFund';
+import OrganizationProfile from '../../screens/organization/organizationProfile';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ViewFundByOrganization from '../../screens/fund/viewFundByOrganization';
 
 function OrganizationNavigation() {
     // Instanciate bottom tab.
     const Tab = createBottomTabNavigator();
+
+    // Funds tab stack.
+    const FundsStack = createNativeStackNavigator();
+
+    // function FundsStackScreen() {
+    //     return (
+    //         <FundsStack.Navigator>
+    //             <FundsStack.Screen name="Funds" options={{ headerShown: false }} component={OrganizationFunds} />
+    //             <FundsStack.Screen name="ViewFund" options={{ headerShown: false }} component={ViewFundByOrganization} />
+    //         </FundsStack.Navigator>
+    //     );
+    // }
 
     return (
         <Tab.Navigator initialRouteName="HomeScreen"
             screenOptions={{
                 tabBarStyle: {
                     height: 60,
-                }
+                },
+                headerShown: false,
             }}>
             <Tab.Screen
                 name="HomeScreen"
-                component={OrganizationFunds}
+                component={CreateOrganizationFund}
                 options={{
                     headerShown: false,
                     title: 'Home',
@@ -37,9 +54,7 @@ function OrganizationNavigation() {
                 name="NewFund"
                 component={CreateOrganizationFund}
                 options={{
-                    headerLeft: () => (
-                        <FAcon name='heart' color='#13B156' size={22} style={{ paddingLeft: 20 }} />
-                    ),
+                    headerShown: false,
                     title: 'Create new fund',
                     tabBarIcon: ({ color, size, focused }) => (
                         focused ?
@@ -69,7 +84,7 @@ function OrganizationNavigation() {
             />
             <Tab.Screen
                 name="Profile"
-                component={OrgRegStepOne}
+                component={OrganizationProfile}
                 options={{
                     headerShown: false,
                     title: 'Profile',
