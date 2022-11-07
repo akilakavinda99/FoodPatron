@@ -7,6 +7,7 @@ import FormLable from '../../components/organization/FormLable'
 import FormSection from '../../components/organization/FormSection'
 import FormTextInput from '../../components/organization/FormTextInput'
 import GradientButton from '../../components/organization/GradientButton'
+import PageHeader from '../../components/organization/PageHeader'
 import VerticleSpace from '../../components/organization/VerticleSpace'
 import pickImage from '../../utils/imageConverter'
 
@@ -36,6 +37,7 @@ function CreateOrganizationFund() {
             backgroundColor: "white",
             height: "100%",
         }}>
+            <PageHeader title="Create new fund" icon="plus-circle" />
             <ScrollView style={{ paddingHorizontal: 20 }}>
                 <FormTextInput title="Title" placeholder="Title" required={true} onChangeText={(value) => onChange("organizationName", value)} />
                 <FormTextInput title="Target of the fund" placeholder="Target of the fund" required={true} />

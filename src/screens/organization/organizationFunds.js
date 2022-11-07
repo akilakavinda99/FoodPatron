@@ -1,54 +1,98 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
-import { Chip } from 'react-native-paper';
+import { ActivityIndicator, RefreshControl, ScrollView, Text } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { getFundByOrganization } from '../../api/fund.api';
 import FundFilterChips from '../../components/organization/FundFilterChips';
 import OrganizationFundsCard from '../../components/organization/OrganizationFundsCard';
 import PageHeader from '../../components/organization/PageHeader'
 import CustomeSearchBar from '../../components/organization/SearchBar';
+import { getRemainingTime } from '../../utils/getRemainingTime';
 
 function OrganizationFunds() {
+    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+
+    const [funds, setFunds] = useState([]);
+    const [showingFunds, setShowingFunds] = useState([]);
+    const [searchTerm, setsearchTerm] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        getFundByOrganization(organizationID)
+            .then((res) => {
+                setFunds(res.data.result);
+                setLoading(false);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }, [organizationID]);
+
+    useEffect(() => {
+        setShowingFunds(funds.filter(fund =>
+            fund.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            fund.description.toLowerCase().includes(searchTerm.toLowerCase())
+        ))
+    }, [searchTerm, funds])
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        getFundByOrganization(organizationID)
+            .then((res) => {
+                setFunds(res.data.result);
+                setRefreshing(false);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
+
     return (
         <SafeAreaProvider style={{
             flex: 1,
             backgroundColor: '#fff'
         }}>
             <PageHeader title="Organization Funds" icon="heart" />
-            <CustomeSearchBar />
+            <CustomeSearchBar onSearch={(search) => { setsearchTerm(search) }} />
             <FundFilterChips />
-            <ScrollView style={{
-                marginTop: 10,
-            }}>
-                {/* <Text style={{
-                    fontSize: 16,
-                    fontWeight: "500",
-                    marginVertical: 10,
-                    marginHorizontal: 20,
-                }}>No funds found</Text> */}
-                <OrganizationFundsCard
-                    title={"Food Protection Program"}
-                    image={"http://res.cloudinary.com/dicjf8jjn/image/upload/v1664568824/akila/qtrix6ndcxkdih2xdbxq.jpg"}
-                    target={"We have identified over 100 refugee families and their children to be part of a food protection program"}
-                    donors={"16 Donors"}
-                    daysLeft={"9 days left"}
-                    raised={10000}
-                    budget={20000}
-                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non
-                    nunc vel metus tincidunt lacinia. Sed sit amet diam eget quam
-                    tincidunt ullamcorper. Nunc auctor, turpis ut lacinia
-                    pellentesque, nunc libero fermentum massa, sit amet
-                    tincidunt quam nunc et nisl. Donec porttitor, erat
-                    non tincidunt pretium, lectus lectus tincidunt
-                    mauris, non tincidunt ipsum nunc sit amet
-                    nunc. Nulla facilisi. Nullam non nunc vel metus
-                    tincidunt lacinia. Sed sit amet diam eget quam
-                    tincidunt ullamcorper. Nunc auctor, turpis ut lacinia
-                    pellentesque, nunc libero fermentum massa, sit amet
-                    tincidunt quam nunc et nisl. Donec porttitor, erat
-                    non tincidunt pretium, lectus lectus tincidunt
-                    mauris, non tincidunt ipsum nunc sit amet
-                    nunc. Nulla facilisi."
-                />
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />}
+                style={{
+                    marginTop: 10,
+                }}>
+                {loading ? (
+                    <ActivityIndicator size="large" />
+                ) : funds.length == 0 ? (
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: "500",
+                        marginVertical: 10,
+                        marginHorizontal: 20,
+                    }}>No funds found</Text>
+                ) : funds.length > 0 && showingFunds.length == 0 ? (
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: "500",
+                        marginVertical: 10,
+                        marginHorizontal: 20,
+                    }}>No search result</Text>
+                ) : (
+                    showingFunds.map(fund =>
+                        <OrganizationFundsCard
+                            key={fund._id}
+                            title={fund.title}
+                            image={fund.fundImage}
+                            target={fund.target}
+                            donors={fund.numOfDonations + " donor(s)"}
+                            daysLeft={getRemainingTime(fund.endingDate)}
+                            raised={fund.currentAmount}
+                            budget={fund.budget}
+                            description={fund.description} />
+                    )
+                )}
+
             </ScrollView>
         </SafeAreaProvider>
     )

@@ -5,6 +5,8 @@ import Micon from 'react-native-vector-icons/MaterialIcons';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import VerticleSpace from '../../components/organization/VerticleSpace';
 import { ProgressBar } from 'react-native-paper';
+import ViewFundStyles from './styles/ViewFundStyles';
+import HorizontalLine from '../../components/organization/HorizontalLine';
 
 function ViewFundByOrganization({ navigation, route }) {
     const { title, image, target, donors, daysLeft, raised, budget, description } = route.params;
@@ -15,11 +17,7 @@ function ViewFundByOrganization({ navigation, route }) {
             backgroundColor: '#fff'
         }}>
             {/* Heading */}
-            <SafeAreaView style={{
-                backgroundColor: "#fff",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-            }}>
+            <SafeAreaView style={ViewFundStyles.body}>
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -46,16 +44,9 @@ function ViewFundByOrganization({ navigation, route }) {
 
             <ScrollView>
                 {/* Fund image */}
-                <View style={{
-                    borderRadius: 10,
-                    marginVertical: 10,
-                    marginHorizontal: 20,
-                    height: 185,
-                    elevation: 5,
-                }}>
+                <View style={ViewFundStyles.fundImage}>
                     <Image
                         style={{
-                            flex: 1,
                             height: 185,
                             borderRadius: 10,
                         }}
@@ -71,38 +62,18 @@ function ViewFundByOrganization({ navigation, route }) {
                     paddingHorizontal: 20,
                     paddingVertical: 10,
                 }}>
-                    <Text style={{
-                        fontSize: 22,
-                        marginBottom: 8,
-                        fontWeight: "700",
-                        textAlign: 'center',
-                    }}>{title}</Text>
+                    <Text style={ViewFundStyles.fundTitle}>{title}</Text>
 
-                    <View
-                        style={{
-                            borderBottomColor: '#E8E8E8',
-                            borderBottomWidth: StyleSheet.hairlineWidth,
-                        }}
-                    />
+                    <HorizontalLine />
                     <VerticleSpace height={10} />
+
                     <View style={{
                         flexDirection: 'row',
                         width: '100%',
                         justifyContent: 'space-between',
                     }}>
-                        <Text style={{
-                            fontSize: 14,
-                            color: "#09101D",
-                            fontWeight: "500",
-                            width: '15%',
-                        }}>Target</Text>
-                        <Text style={{
-                            fontSize: 15,
-                            fontWeight: "300",
-                            color: "#09101D",
-                            width: '80%',
-                            textAlign: 'justify',
-                        }}>{target}</Text>
+                        <Text style={ViewFundStyles.label}>Target</Text>
+                        <Text style={ViewFundStyles.text}>{target}</Text>
 
                     </View>
                     <VerticleSpace height={10} />
@@ -111,18 +82,8 @@ function ViewFundByOrganization({ navigation, route }) {
                         width: '100%',
                         justifyContent: 'space-between',
                     }}>
-                        <Text style={{
-                            fontSize: 14,
-                            color: "#09101D",
-                            fontWeight: "500",
-                            width: '15%',
-                        }}>Budget</Text>
-                        <Text style={{
-                            fontSize: 15,
-                            fontWeight: "300",
-                            color: "#09101D",
-                            width: '80%',
-                        }}>Rs.{raised}.00</Text>
+                        <Text style={ViewFundStyles.label}>Budget</Text>
+                        <Text style={ViewFundStyles.text}>Rs.{raised}.00</Text>
                     </View>
 
                     <View style={{
@@ -153,39 +114,20 @@ function ViewFundByOrganization({ navigation, route }) {
                             }}>{daysLeft}</Text>
                         </View>
                     </View>
-                    <View
-                        style={{
-                            borderBottomColor: '#E8E8E8',
-                            borderBottomWidth: StyleSheet.hairlineWidth,
-                        }}
-                    />
-                    <VerticleSpace height={10} />
-                    <View>
-                        <Text style={{
-                            fontSize: 14,
-                            color: "#09101D",
-                            fontWeight: "500",
-                        }}>Description</Text>
-                        <Text style={{
-                            fontSize: 15,
-                            fontWeight: "300",
-                            color: "#09101D",
-                            textAlign: 'justify',
-                        }}>{description}</Text>
 
-                    </View>
-                    <View
-                        style={{
-                            borderBottomColor: '#E8E8E8',
-                            borderBottomWidth: StyleSheet.hairlineWidth,
-                        }}
-                    />
+                    <HorizontalLine />
                     <VerticleSpace height={10} />
-                    <Text style={{
-                        fontSize: 14,
-                        color: "#09101D",
-                        fontWeight: "500",
-                    }}>Organization</Text>
+
+                    <View>
+                        <Text style={ViewFundStyles.section}>Description</Text>
+                        <Text style={ViewFundStyles.description}>{description}</Text>
+                    </View>
+
+                    <VerticleSpace height={10} />
+                    <HorizontalLine />
+                    <VerticleSpace height={10} />
+
+                    <Text style={ViewFundStyles.section}>Organization</Text>
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
