@@ -2,9 +2,10 @@ import React from 'react'
 import { TextInput } from 'react-native-paper';
 import FAcon from 'react-native-vector-icons/FontAwesome';
 
-function CustomeSearchBar() {
+function CustomeSearchBar({ onSearch }) {
     return (
         <TextInput
+            onChangeText={onSearch}
             mode="outlined"
             activeOutlineColor="#56616F"
             outlineColor="#DADEE3"

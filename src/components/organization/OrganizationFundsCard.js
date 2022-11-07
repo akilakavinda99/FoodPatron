@@ -47,7 +47,8 @@ function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised,
                     paddingHorizontal: 10,
                     paddingTop: 5,
                 }}>
-                    <Text style={{
+                    <Text numberOfLines={1}
+                    style={{
                         fontSize: 18,
                         marginBottom: 8,
                         fontWeight: "600",

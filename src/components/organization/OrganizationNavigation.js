@@ -1,5 +1,5 @@
 import React from 'react'
-import FAcon from 'react-native-vector-icons/FontAwesome';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import OrgRegStepOne from '../../screens/organization/registration/stepOne';
@@ -74,8 +74,8 @@ function OrganizationNavigation() {
                     title: 'Funds',
                     tabBarIcon: ({ color, size, focused }) => (
                         focused ?
-                            <MIcon name="toll" color='#13B156' size={size} style={{ backgroundColor: '#E8F8EF', paddingHorizontal: 20, paddingVertical: 5, borderRadius: 20 }} />
-                            : <MIcon name="toll" color='#13B156' size={size} />
+                            <FA5Icon name="coins" color='#13B156' size={size} style={{ backgroundColor: '#E8F8EF', paddingHorizontal: 20, paddingVertical: 5, borderRadius: 20 }} />
+                            : <FA5Icon name="coins" color='#13B156' size={size} />
                     ),
                     tabBarLabelStyle: {
                         color: '#13B156',
