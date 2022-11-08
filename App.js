@@ -26,6 +26,8 @@ import PendingReqViewCard from "./src/components/donator/pendingReqViewCard";
 import PendingReqView from "./src/screens/donator/pendingReqView";
 import AcceptedRequests from "./src/screens/donator/acceptedRequests";
 import ViewFundByOrganization from "./src/screens/fund/viewFundByOrganization";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import CommonBottomNav from "./src/components/common/commonNav";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -77,7 +79,7 @@ export default function App() {
         ) : (
           <Stack.Screen
             name="second"
-            component={SecondScreen}
+            component={CommonBottomNav}
             options={{ headerShown: false }}
           />
           // <Stack.Screen
@@ -183,12 +185,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
