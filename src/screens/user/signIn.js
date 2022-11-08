@@ -14,7 +14,10 @@ const SignIn = () => {
     const [checked, setChecked] = useState(false);
     
     return (
-        <View>
+        <View style={{
+            backgroundColor: "white",
+            height: "100%",
+        }}>
             <Text style={{
                 fontSize: 25,
                 fontWeight: "bold",
