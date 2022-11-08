@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Text, View } from "react-native";
 import { Linking } from "react-native";
 import { Button } from "react-native-paper";
 import { getOneDonation } from "../../api/donator.api";
 import DonationViewImage from "../../components/donator/DonationViewImage";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function DonationView({ route }) {
+  const navigation = useNavigation();
   const { donationId } = route.params;
+
   const [loading, setLoading] = useState(true);
   const [donation, setDonation] = useState({});
+
   useEffect(() => {
     setLoading(true);
+
     async function getDonation(donationId) {
       await getOneDonation(donationId)
         .then((res) => {
@@ -21,12 +26,18 @@ export default function DonationView({ route }) {
         })
         .catch((err) => {
           setLoading(false);
-
+          Alert.alert("Error Occured");
           console.log(err);
         });
     }
+
     getDonation(donationId);
   }, []);
+
+  const navigateToSendRequest = () => {
+    navigation.navigate("donationDashboard", { donationID: donation._id });
+  };
+
   return (
     <View
       style={{
@@ -85,57 +96,83 @@ export default function DonationView({ route }) {
               <Text style={{ textAlign: "center", fontSize: 16 }}>
                 Contact Details
               </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginTop: 26,
-                }}
-              >
+              {donation.shareContactDetails ? (
                 <View
                   style={{
-                    height: 50,
-                    width: 50,
-                    backgroundColor: "#415171",
-                    borderRadius: 50,
-                    marginLeft: 43,
+                    flexDirection: "row",
+                    marginTop: 26,
                   }}
                 >
-                  <Ionicons
-                    onPress={() => {
-                      Linking.openURL(`mailto:${donation.email}`);
-                    }}
-                    name="mail-outline"
-                    size={24}
-                    color="white"
+                  <View
                     style={{
-                      marginTop: 13,
-                      marginLeft: 13,
+                      height: 50,
+                      width: 50,
+                      backgroundColor: "#415171",
+                      borderRadius: 50,
+                      marginLeft: 43,
                     }}
-                  />
+                  >
+                    <Ionicons
+                      onPress={() => {
+                        Linking.openURL(`mailto:${donation.email}`);
+                      }}
+                      name="mail-outline"
+                      size={24}
+                      color="white"
+                      style={{
+                        marginTop: 13,
+                        marginLeft: 13,
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      height: 50,
+                      width: 50,
+                      backgroundColor: "#415171",
+                      borderRadius: 50,
+                      marginLeft: 97,
+                    }}
+                  >
+                    <Ionicons
+                      onPress={() => {
+                        Linking.openURL(`tel:${donation.contactNumber}`);
+                      }}
+                      name="call-outline"
+                      size={24}
+                      color="white"
+                      style={{
+                        marginTop: 12,
+                        marginLeft: 15,
+                      }}
+                    />
+                  </View>
                 </View>
+              ) : (
                 <View
                   style={{
-                    height: 50,
-                    width: 50,
-                    backgroundColor: "#415171",
-                    borderRadius: 50,
-                    marginLeft: 97,
+                    marginTop: 20,
                   }}
                 >
-                  <Ionicons
-                    onPress={() => {
-                      Linking.openURL(`tel:${donation.contactNumber}`);
-                    }}
-                    name="call-outline"
-                    size={24}
-                    color="white"
+                  <Text
                     style={{
-                      marginTop: 12,
-                      marginLeft: 15,
+                      textAlign: "center",
+                      fontWeight: "600",
                     }}
-                  />
+                  >
+                    The contact details will be available once
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: "600",
+
+                      textAlign: "center",
+                    }}
+                  >
+                    your request is approved
+                  </Text>
                 </View>
-              </View>
+              )}
             </View>
             <Button
               mode="contained"
@@ -146,6 +183,7 @@ export default function DonationView({ route }) {
                 borderRadius: 32,
                 backgroundColor: "green",
               }}
+              onPress={navigateToSendRequest}
             >
               Send Request
             </Button>
