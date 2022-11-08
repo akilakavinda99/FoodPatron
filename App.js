@@ -8,7 +8,7 @@ import FirstScreen from "./src/screens/firstScreen";
 
 import SecondScreen from "./src/screens/secondScreen";
 import HomeScreen from "./src/screens/homeScreen";
-import OnboardingScreen from "./src/screens/OnboardingScreen";
+import OnboardingScreen from "./src/screens/onboardingScreen";
 import DonationView from "./src/screens/donator/donationView";
 import AllDonations from "./src/screens/donator/allDonations";
 import CreateDonation from "./src/screens/donator/createDonation";
