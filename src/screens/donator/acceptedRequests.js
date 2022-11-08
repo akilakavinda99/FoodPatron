@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -12,6 +13,8 @@ import PendingReqCard from "../../components/donator/pendingReqCard";
 
 const AcceptedRequests = ({ route }) => {
   const userId = "63425985a2f0b4b546de6621";
+  const navigation = useNavigation();
+
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
   useEffect(() => {
@@ -34,6 +37,7 @@ const AcceptedRequests = ({ route }) => {
       <>
         <View style={{ flexDirection: "row", marginTop: 20 }}>
           <IconButton
+            onPress={() => navigation.goBack()}
             icon="arrow-left"
             style={{
               marginLeft: 25,

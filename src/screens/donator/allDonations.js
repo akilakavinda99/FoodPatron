@@ -6,6 +6,7 @@ import { getAllDonations } from "../../api/home.api";
 import DonatorCard from "../../components/donator/DonatorCard";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import allDonationStyles from "./styles/AllDonationStyles";
 
 const AllDonations = () => {
   const navigation = useNavigation();
@@ -14,6 +15,7 @@ const AllDonations = () => {
   const [searchTerm, setsearchTerm] = useState("");
   const [showingFunds, setShowingFunds] = useState([]);
 
+  // Get donations
   useEffect(() => {
     setLoading(true);
     getHomeDonations()
@@ -29,6 +31,8 @@ const AllDonations = () => {
         console.log(err.response);
       });
   }, []);
+
+  // Search function
   useEffect(() => {
     setShowingFunds(
       donations.filter(
@@ -46,20 +50,12 @@ const AllDonations = () => {
   };
 
   return (
-    <View
-      style={{
-        // marginTop: 20,
-        backgroundColor: "white",
-        height: "100%",
-      }}
-    >
-      <View style={{ flexDirection: "row", marginTop: 20 }}>
+    <View style={allDonationStyles.mainView}>
+      <View style={allDonationStyles.titleRow}>
         <IconButton
           icon="arrow-left"
-          style={{
-            marginLeft: 25,
-            marginTop: 12,
-          }}
+          style={allDonationStyles.backButton}
+          onPress={() => navigation.goBack()}
         />
         <Text
           style={{
@@ -76,10 +72,7 @@ const AllDonations = () => {
           name="pluscircleo"
           size={24}
           color="black"
-          style={{
-            marginLeft: 75,
-            marginTop: 18,
-          }}
+          style={allDonationStyles.createicon}
         />
       </View>
       <TextInput
@@ -94,21 +87,10 @@ const AllDonations = () => {
           <TextInput.Icon
             icon="text-search"
             color="#ADB2B6"
-            style={{
-              paddingTop: 10,
-              // width: 20,
-              // height: 20,
-            }}
+            style={allDonationStyles.inputIcon}
           />
         }
-        style={{
-          width: 347,
-          height: 47,
-          marginLeft: 23,
-          backgroundColor: "#F6F6F6",
-          marginBottom: 20,
-          borderRadius: 100,
-        }}
+        style={allDonationStyles.searchInput}
       ></TextInput>
       <View>
         {loading ? (

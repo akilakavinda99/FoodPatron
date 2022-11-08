@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { IconButton, TextInput } from "react-native-paper";
-import { AntDesign } from "@expo/vector-icons";
 import MyDonationCard from "../../components/donator/MyDonationCard";
 import { getUserDonation } from "../../api/donator.api";
+import myDonationStyles from "./styles/MyDonationStyles";
+import { useNavigation } from "@react-navigation/native";
 
 const MyDonations = () => {
   const userId = "63425985a2f0b4b546de6621";
+  const navigation = useNavigation();
+
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
   useEffect(() => {
@@ -29,48 +32,28 @@ const MyDonations = () => {
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         <IconButton
           icon="arrow-left"
-          style={{
-            marginLeft: 25,
-            marginTop: 12,
-          }}
+          style={myDonationStyles.backIcon}
+          onPress={() => navigation.goBack()}
         />
-        <Text
-          style={{
-            marginTop: 15,
-            marginLeft: 80,
-            fontSize: 20,
-          }}
-        >
-          My donations
-        </Text>
+        <Text style={myDonationStyles.title}>My donations</Text>
       </View>
       <TextInput
         theme={{ roundness: 100 }}
         mode="outlined"
         activeOutlineColor="black"
         outlineColor="#9FA5AA"
-        // label="Name"
         label="Search"
-        onChangeText={(value) => setsearchTerm(value)}
+        // onChangeText={(value) => setsearchTerm(value)}
         left={
           <TextInput.Icon
             icon="text-search"
             color="#ADB2B6"
             style={{
               paddingTop: 10,
-              // width: 20,
-              // height: 20,
             }}
           />
         }
-        style={{
-          width: 347,
-          height: 47,
-          marginLeft: 23,
-          backgroundColor: "#F6F6F6",
-          marginBottom: 20,
-          borderRadius: 100,
-        }}
+        style={myDonationStyles.searchInput}
       />
       <View>
         {loading ? (
@@ -95,7 +78,5 @@ const MyDonations = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default MyDonations;

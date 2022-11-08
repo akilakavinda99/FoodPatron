@@ -1,56 +1,22 @@
 import React from "react";
 import {
   View,
-  StyleSheet,
   Text,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
-
-import donationdashoboardStyles from "./styles/DonationDashboardStyles";
-import { Dimensions } from "react-native";
+import { LineChart } from "react-native-chart-kit";
 import { useNavigation } from "@react-navigation/native";
+import { chartConfig, data } from "../../constants/chartData";
+import donationdashoboardStyles from "./styles/DonationDashboardStyles";
+
 const screenWidth = Dimensions.get("window").width;
 
 const DonationDashboard = () => {
   const navigation = useNavigation();
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `grey`, // optional
-        strokeWidth: 2, // optional
-      },
-    ],
-    legend: ["Requests"], // optional
-  };
-  const chartConfig = {
-    backgroundColor: "white",
-    backgroundGradientFrom: "black",
-    backgroundGradientTo: "white",
-    decimalPlaces: 2, // optional, defaults to 2dp
-    color: (opacity = 1) => `black`,
-    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    propsForDots: {
-      r: "6",
-      strokeWidth: "2",
-      stroke: "black",
-    },
-    style: {
-      borderRadius: 16,
-    }, // optional
-  };
 
   const navigateToMyDonation = () => {
     navigation.navigate("myDonations");
@@ -106,11 +72,7 @@ const DonationDashboard = () => {
         <LineChart
           data={data}
           width={screenWidth}
-          style={{
-            marginRight: 30,
-            marginTop: 30,
-            borderRadius: 20,
-          }}
+          style={donationdashoboardStyles.chartStyle}
           height={220}
           chartConfig={chartConfig}
           getDotColor={() => "black"}

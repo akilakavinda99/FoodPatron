@@ -49,6 +49,11 @@ const donationdashoboardStyles = StyleSheet.create({
     backgroundColor: "#9AE875",
     borderRadius: 20,
   },
+  chartStyle: {
+    marginRight: 30,
+    marginTop: 30,
+    borderRadius: 20,
+  },
 });
 
 export default donationdashoboardStyles;

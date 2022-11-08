@@ -12,6 +12,7 @@ import { sendDonationRequest } from "../../api/donator.api";
 
 import CreateDonationInput from "../../components/donator/CreateDonationInput";
 import InputName from "../../components/donator/InputName";
+import sendRequestStyles from "./styles/SendRequestStyles";
 
 const SendRequest = ({ route }) => {
   const { donationID } = route.params;
@@ -52,24 +53,11 @@ const SendRequest = ({ route }) => {
   return (
     <>
       {loading ? (
-        <View
-          style={{
-            marginTop: 50,
-          }}
-        >
-          <ActivityIndicator
-            size="large"
-            style={{
-              marginTop: 300,
-            }}
-          />
+        <View>
+          <ActivityIndicator size="large" style={sendRequestStyles.activity} />
         </View>
       ) : (
-        <View
-          style={{
-            marginTop: 30,
-          }}
-        >
+        <View style={sendRequestStyles.mainView}>
           <InputName text="Your Name" />
           <CreateDonationInput
             placeholder="Your Name"
@@ -103,27 +91,14 @@ const SendRequest = ({ route }) => {
             activeOutlineColor="black"
             outlineColor="#9FA5AA"
             multiline={true}
-            style={{
-              width: 347,
-              height: 123,
-              marginLeft: 23,
-              marginTop: 20,
-              backgroundColor: "white",
-            }}
+            style={sendRequestStyles.description}
             onChangeText={(value) => setDescription(value)}
           />
           <Button
             mode="contained"
             // onPress={createDonation}
             uppercase={false}
-            style={{
-              marginTop: 55,
-              marginBottom: 50,
-              width: 281,
-              marginLeft: 55,
-              borderRadius: 32,
-              backgroundColor: "green",
-            }}
+            style={sendRequestStyles.sendButton}
             onPress={sendRequest}
           >
             Send Request
