@@ -29,6 +29,7 @@ import AcceptedRequests from "./src/screens/donator/acceptedRequests";
 import ViewFundByOrganization from "./src/screens/fund/viewFundByOrganization";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommonBottomNav from "./src/components/common/commonNav";
+import ViewRequestByOrganization from "./src/screens/request/viewRequestByOrganization";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -180,6 +181,11 @@ export default function App() {
         <Stack.Screen
           name="viewFundByOrg"
           component={ViewFundByOrganization}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="viewRequestByOrg"
+          component={ViewRequestByOrganization}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
