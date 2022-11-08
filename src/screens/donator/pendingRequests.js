@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Alert, ScrollView } from "react-native";
 import { ActivityIndicator, IconButton, TextInput } from "react-native-paper";
@@ -7,6 +8,8 @@ import pendingRequestStyles from "./styles/PendingRequestsStyles";
 
 const PendingRequestss = () => {
   const userId = "63425985a2f0b4b546de6621";
+  const navigation = useNavigation();
+
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
   useEffect(() => {
@@ -28,7 +31,11 @@ const PendingRequestss = () => {
     <ScrollView>
       <>
         <View style={{ flexDirection: "row", marginTop: 20 }}>
-          <IconButton icon="arrow-left" style={pendingRequestStyles.leftIcon} />
+          <IconButton
+            icon="arrow-left"
+            style={pendingRequestStyles.leftIcon}
+            onPress={() => navigation.goBack()}
+          />
           <Text style={pendingRequestStyles.seaarchText}>Pending Requests</Text>
         </View>
         <TextInput

@@ -27,3 +27,6 @@ export const getPendingRequests = (donationId) =>
 
 export const getAcceptedRequests = (donationId) =>
   API.get(`/getApprovedRequests/${donationId}`);
+
+export const deleteDonationRequest = (donationId) =>
+  API.delete(`/deleteDonation/${donationId}`);

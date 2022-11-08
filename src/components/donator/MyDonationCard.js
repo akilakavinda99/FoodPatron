@@ -1,25 +1,18 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Text,
-  Alert,
-} from "react-native";
-import { Chip } from "react-native-paper";
-import styles from "./styles/DonatorCardStyles";
+import { View, TouchableOpacity, Image, Text, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
-import EditDonation from "../../screens/donator/editDonation";
-import { markDonationCompleted } from "../../api/donator.api";
+import { Chip } from "react-native-paper";
+import {
+  deleteDonationRequest,
+  markDonationCompleted,
+} from "../../api/donator.api";
+import styles from "./styles/DonatorCardStyles";
+import myDonationCardStyles from "./styles/MyDonationCardStyles";
 
 const MyDonationCard = ({
   imageUrl,
   title,
-  description,
-  requests,
-  location,
   donationId,
   status,
   donation,
@@ -27,10 +20,35 @@ const MyDonationCard = ({
 }) => {
   const navigation = useNavigation();
   const navigateToEdit = () => {
-    // return <EditDonation donations={donation} />;
     navigation.navigate("editDonation", { donation: donation });
   };
 
+  const deleteDonation = () => {
+    Alert.alert("Delete Donation", "Are you sure?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("OK Pressed"),
+      },
+
+      {
+        text: "OK",
+        onPress: () => {
+          onMark(true);
+          deleteDonationRequest(donation._id)
+            .then((res) => {
+              onMark(false);
+              Alert.alert("success", "Donation Successfully Deleted");
+            })
+            .catch((err) => {
+              console.log(err.response);
+              onMark(false);
+            });
+        },
+      },
+    ]);
+  };
+
+  // Mark as complete function
   const markAsCompleted = () => {
     Alert.alert("Mark donation completed", "Are you sure?", [
       {
@@ -54,7 +72,6 @@ const MyDonationCard = ({
         },
       },
     ]);
-    // onMark(true);
   };
   return (
     <View>
@@ -77,33 +94,18 @@ const MyDonationCard = ({
             {status == "completed" ? (
               <>
                 <Chip
-                  icon={() => (
-                    <Icon
-                      name="checkbox-marked-circle-outline"
-                      size={20}
-                      color="green"
-                    />
-                  )}
-                  // icon="checkbox-marked-circle-outline"
-                  onPress={() => console.log("Pressed")}
-                  style={{
-                    width: 168,
-                    marginLeft: 25,
-                  }}
+                  icon={() => <Icon name="check" size={20} color="green" />}
+                  style={myDonationCardStyles.completedChip}
                 >
-                  Mark as Completed
+                  Completed
                 </Chip>
                 <Chip
                   icon={() => (
                     <Icon name="delete-outline" size={20} color="red" />
                   )}
                   // icon=""
-                  onPress={() => console.log("Pressed")}
-                  style={{
-                    width: 85,
-                    marginLeft: 60,
-                    marginTop: 10,
-                  }}
+                  onPress={deleteDonation}
+                  style={myDonationCardStyles.completedDeleteChip}
                 >
                   Delete
                 </Chip>
@@ -118,12 +120,8 @@ const MyDonationCard = ({
                       color="green"
                     />
                   )}
-                  // icon="checkbox-marked-circle-outline"
                   onPress={markAsCompleted}
-                  style={{
-                    width: 168,
-                    marginLeft: 25,
-                  }}
+                  style={myDonationCardStyles.completedChip}
                 >
                   Mark as Completed
                 </Chip>
@@ -132,24 +130,15 @@ const MyDonationCard = ({
                     icon={() => (
                       <Icon name="delete-outline" size={20} color="red" />
                     )}
-                    // icon=""
-                    onPress={() => console.log("Pressed")}
-                    style={{
-                      width: 85,
-                      marginLeft: 10,
-                      marginTop: 10,
-                    }}
+                    onPress={deleteDonation}
+                    style={myDonationCardStyles.deleteChip}
                   >
                     Delete
                   </Chip>
                   <Chip
                     icon="square-edit-outline"
                     onPress={navigateToEdit}
-                    style={{
-                      width: 85,
-                      marginLeft: 23,
-                      marginTop: 10,
-                    }}
+                    style={myDonationCardStyles.editChip}
                   >
                     Edit
                   </Chip>

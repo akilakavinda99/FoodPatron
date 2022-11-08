@@ -3,8 +3,11 @@ import { ImageBackground, View, Text } from "react-native";
 import styles from "./styles/DonationViewImageStyles";
 import { BlurView } from "expo-blur";
 import { Button, Chip } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 export default function DonationViewImage(props) {
+  const navigation = useNavigation();
+
   return (
     <View>
       <ImageBackground
@@ -25,6 +28,7 @@ export default function DonationViewImage(props) {
           }}
         >
           <Button
+            onPress={() => navigation.goBack()}
             icon="arrow-left-circle-outline"
             uppercase={false}
             style={{
