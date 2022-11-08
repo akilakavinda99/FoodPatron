@@ -3,10 +3,10 @@ import { Text, View } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import FormLable from './FormLable'
 
-function FormTextInput({ title, required, placeholder, icon, ...rest }) {
+function FormTextInput({ title, required, placeholder, icon, keyboardType, ...rest }) {
 
     return (
-        <View style={{ paddingTop: 10 }}>
+        <View style={{ paddingTop: 3 }}>
             <FormLable title={title} required={required} />
             <TextInput
                 mode="outlined"
@@ -29,6 +29,7 @@ function FormTextInput({ title, required, placeholder, icon, ...rest }) {
                         color="#ADB2B6"
                     />
                 }
+                keyboardType={keyboardType ? keyboardType : "default"}
                 {...rest}
             />
         </View>
