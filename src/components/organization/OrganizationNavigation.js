@@ -9,6 +9,7 @@ import OrganizationProfile from '../../screens/organization/organizationProfile'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ViewFundByOrganization from '../../screens/fund/viewFundByOrganization';
+import OrganizationHome from '../../screens/organization/organizationHome';
 
 function OrganizationNavigation() {
     // Instanciate bottom tab.
@@ -36,7 +37,7 @@ function OrganizationNavigation() {
             }}>
             <Tab.Screen
                 name="HomeScreen"
-                component={CreateOrganizationFund}
+                component={OrganizationHome}
                 options={{
                     headerShown: false,
                     title: 'Home',

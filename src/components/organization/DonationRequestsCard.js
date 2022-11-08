@@ -1,22 +1,23 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
-import { ProgressBar, Colors } from 'react-native-paper';
 
-function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised, budget, description }) {
+function DonationRequestsCard({ title, image, description, fname, lname, email, userId, address, country, tel }) {
     const navigation = useNavigation();
 
     return (
         <Pressable onPress={() => {
-            navigation.navigate('viewFundByOrg', {
+            navigation.navigate('viewRequestByOrg', {
                 title: title,
                 image: image,
-                target: target,
-                donors: donors,
-                daysLeft: daysLeft,
-                raised: raised,
-                budget: budget,
                 description: description,
+                fname: fname,
+                lname: lname,
+                email: email,
+                userId: userId,
+                address: address,
+                country: country,
+                tel: tel,
             })
         }}>
             <View style={{
@@ -60,37 +61,31 @@ function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised,
                             fontSize: 13,
                             fontWeight: "300",
                             color: "#09101D",
-                            textAlign: 'justify'
-                        }}>{target}</Text>
+                            textAlign: 'justify',
+                            marginBottom: 16,
+                        }}>{description}</Text>
 
-                    <ProgressBar progress={raised / budget} color="#13B156"
+                    <Text
+                        numberOfLines={1}
                         style={{
-                            marginTop: 10,
-                            borderRadius: 10,
-                        }} />
-
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: 10,
-                    }}>
-                        <Text style={{
                             fontSize: 11,
                             fontWeight: "300",
                             color: "#09101D",
-                        }}>{donors}</Text>
+                            textAlign: 'justify'
+                        }}>{address}</Text>
 
-                        <Text style={{
+                    <Text
+                        numberOfLines={1}
+                        style={{
                             fontSize: 11,
                             fontWeight: "300",
-                            color: "#ff0000",
-                        }}>{daysLeft}</Text>
-
-                    </View>
+                            color: "#09101D",
+                            textAlign: 'justify'
+                        }}>{country}</Text>
                 </View>
             </View>
         </Pressable>
     )
 }
 
-export default OrganizationFundsCard
+export default DonationRequestsCard

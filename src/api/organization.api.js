@@ -15,3 +15,11 @@ export const getOrgLatestContribution = (organizationID, limit) => API.get(`/${o
 export const getOrgDashSummary = (organizationID) => API.get(`/summary/${organizationID}`);
 export const getContributionChart = (organizationID) => API.get(`/contributionChart/${organizationID}`);
 export const getReport = (organizationID, month) => API.get(`/${organizationID}/report/${month}`);
+
+
+const RequestsAPI = axios.create({
+    baseURL: BASE_URL + 'requester',
+    // withCredentials: true
+});
+
+export const getAllRequests = () => RequestsAPI.get("/allrequests");
