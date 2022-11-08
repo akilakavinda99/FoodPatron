@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
-import { Image, ScrollView, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import ImageUpload from '../../components/donator/ImageUpload'
 import FormDatePicker from '../../components/organization/FormDatePicker'
 import FormLable from '../../components/organization/FormLable'
@@ -10,85 +10,131 @@ import GradientButton from '../../components/organization/GradientButton'
 import PageHeader from '../../components/organization/PageHeader'
 import VerticleSpace from '../../components/organization/VerticleSpace'
 import pickImage from '../../utils/imageConverter'
+import ViewFundStyles from './styles/ViewFundStyles'
+import { FundFormValidation } from '../../components/organization/FundFormValidation'
+import { newFund } from '../../api/fund.api'
 
 function CreateOrganizationFund() {
+    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
     const navigation = useNavigation();
-    const [selectedImage, setSelectedImage] = useState(null);
+    const isFocused = useIsFocused();
 
+    const [selectedImage, setSelectedImage] = useState(null);
     const [fundData, setFundData] = useState({})
+    const [formErrors, setFormErrors] = useState({})
+
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const onChange = (name, value) => {
         setFundData({ ...fundData, [name]: value })
     }
 
-    const onPress = () => {
-        console.log(orgData);
-        navigation.navigate("OrgRegStepTwo", { orgData: orgData })
+    const onSubmitPress = () => {
+        setFormErrors(FundFormValidation(fundData))
+        setIsSubmitting(true)
     }
     const pickImageFromGallery = () => {
         pickImage().then((res) => {
             setSelectedImage(res);
-            //  console.log(res);
+            onChange("fundImage", res);
         });
     };
 
+    useEffect(() => {
+        if (Object.keys(formErrors).length === 0 && isSubmitting) {
+            setFundData({ ...fundData, ['organizationID']: organizationID })
+            fundData.endingDate = new Date(fundData.endingDate);
+
+            newFund(fundData).then(res => {
+                navigation.navigate("OrgFunds")
+            }).catch(err => {
+                console.log(err);
+            })
+            setIsSubmitting(false)
+        } else {
+            setIsSubmitting(false)
+        }
+    }, [formErrors, isSubmitting])
+
+    useEffect(() => {
+        setFundData({})
+        setFormErrors({})
+        setIsSubmitting(false)
+        setSelectedImage(null);
+    }, [isFocused])
+
     return (
-        <View style={{
-            backgroundColor: "white",
-            height: "100%",
-        }}>
-            <PageHeader title="Create new fund" icon="plus-circle" />
-            <ScrollView style={{ paddingHorizontal: 20 }}>
-                <FormTextInput title="Title" placeholder="Title" required={true} onChangeText={(value) => onChange("organizationName", value)} />
-                <FormTextInput title="Target of the fund" placeholder="Target of the fund" required={true} />
-                <FormTextInput title="Description" placeholder="Description" required={true} />
+        isFocused ? (
+            <View style={{
+                backgroundColor: "white",
+                height: "100%",
+            }}>
+                <PageHeader title="Create new fund" icon="plus-circle" />
+                <ScrollView style={{ paddingHorizontal: 20 }}>
+                    <FormTextInput title="Title" placeholder="Title" required={true} onChangeText={(value) => onChange("title", value)} />
+                    <Text style={ViewFundStyles.errorText}>{formErrors.title}</Text>
 
-                {/* Ending Date with a Date picker */}
-                <View style={{ paddingTop: 10 }}>
-                    <FormLable title="Ending Date" required={true} />
-                    <FormDatePicker onChangeDate={(value) => console.log(value)} minDate={new Date()} />
-                </View>
+                    <FormTextInput title="Target of the fund" placeholder="Target of the fund" required={true} onChangeText={(value) => onChange("target", value)} />
+                    <Text style={ViewFundStyles.errorText}>{formErrors.target}</Text>
 
-                <FormTextInput title="Donation Required" placeholder="Rs. 9999.00" required={true} />
+                    <FormTextInput title="Description" placeholder="Description" required={true} onChangeText={(value) => onChange("description", value)} />
+                    <Text style={ViewFundStyles.errorText}>{formErrors.description}</Text>
 
-                {/* Upload fund image */}
-                <FormLable title="Fund image" required={true} />
-                <View
-                    style={{ flexDirection: "row" }}
-                >
-                    <TouchableOpacity onPress={pickImageFromGallery}>
-                        <ImageUpload />
-                    </TouchableOpacity>
-                    {selectedImage != null && selectedImage != undefined ? (
-                        <Image
-                            style={{
-                                width: 110,
-                                height: 98,
-                                marginLeft: 24,
-                                marginTop: 13,
-                            }}
-                            source={{ uri: selectedImage }}
-                        />
-                    ) : (
-                        <></>
-                    )}
-                </View>
+                    {/* Ending Date with a Date picker */}
+                    <View style={{ paddingTop: 10 }}>
+                        <FormLable title="Ending Date" required={true} />
+                        <FormDatePicker onChangeDate={(value) => onChange("endingDate", value)} minDate={new Date()} />
+                        <Text style={ViewFundStyles.errorText}>{formErrors.endingDate}</Text>
+                    </View>
 
-                <VerticleSpace height={24} />
+                    <FormTextInput title="Donation Required" placeholder="Rs. 9999.00" keyboardType='numeric' required={true} onChangeText={(value) => onChange("budget", value)} />
+                    <Text style={ViewFundStyles.errorText}>{formErrors.budget}</Text>
 
-                <FormSection section="Contact Information" />
-                <FormTextInput title="Email" placeholder="Email" required={true} />
-                <FormTextInput title="Contact Number" placeholder="Contact Number" required={true} />
+                    {/* Upload fund image */}
+                    <FormLable title="Fund image" required={true} />
+                    <View
+                        style={{ flexDirection: "row" }}
+                    >
+                        <TouchableOpacity onPress={pickImageFromGallery}>
+                            <ImageUpload />
+                        </TouchableOpacity>
+                        {selectedImage != null && selectedImage != undefined ? (
+                            <Image
+                                style={{
+                                    width: 110,
+                                    height: 98,
+                                    marginLeft: 24,
+                                    marginTop: 13,
+                                }}
+                                source={{ uri: selectedImage }}
+                            />
+                        ) : (
+                            <></>
+                        )}
+                    </View>
+                    <Text style={ViewFundStyles.errorText}>{formErrors.fundImage}</Text>
+
+                    <VerticleSpace height={24} />
+
+                    <FormSection section="Contact Information" />
+                    <FormTextInput title="Email" placeholder="Email" required={true} keyboardType='email-address' onChangeText={(value) => onChange("contactEmail", value)} />
+                    <Text style={ViewFundStyles.errorText}>{formErrors.contactEmail}</Text>
+
+                    <FormTextInput title="Contact Number" placeholder="Contact Number" required={true} keyboardType='phone-pad' onChangeText={(value) => onChange("contactNumber", value)} />
+                    <Text style={ViewFundStyles.errorText}>{formErrors.contactNumber}</Text>
 
 
-                <View style={{
-                    height: 55,
-                    marginVertical: 24,
-                }}>
-                    <GradientButton text="Create Fund" onPress={onPress} />
-                </View>
-            </ScrollView>
-        </View>
+                    <View style={{
+                        height: 55,
+                        marginVertical: 24,
+                    }}>
+                        <GradientButton text="Create Fund" onPress={onSubmitPress} />
+                    </View>
+                </ScrollView>
+            </View>
+        ) : (
+            <Text>Not focused</Text>
+        )
     )
 }
 

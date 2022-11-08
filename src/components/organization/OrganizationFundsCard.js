@@ -3,7 +3,7 @@ import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { ProgressBar, Colors } from 'react-native-paper';
 
-function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised, budget, description }) {
+function OrganizationFundsCard({ fundID, title, image, target, donors, daysLeft, raised, budget, description, status }) {
     const navigation = useNavigation();
 
     return (
@@ -17,6 +17,8 @@ function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised,
                 raised: raised,
                 budget: budget,
                 description: description,
+                fundID: fundID,
+                status: status,
             })
         }}>
             <View style={{
@@ -84,7 +86,7 @@ function OrganizationFundsCard({ title, image, target, donors, daysLeft, raised,
                             fontSize: 11,
                             fontWeight: "300",
                             color: "#ff0000",
-                        }}>{daysLeft}</Text>
+                        }}>{status !== 'completed' ? daysLeft : 'Completed'}</Text>
 
                     </View>
                 </View>

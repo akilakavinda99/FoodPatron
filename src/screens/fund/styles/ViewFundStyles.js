@@ -42,7 +42,12 @@ const ViewFundStyles = StyleSheet.create({
         fontWeight: "300",
         color: "#09101D",
         textAlign: 'justify',
-    }
+    },
+    errorText: {
+        color: 'red',
+        marginLeft: 20,
+        fontSize: 10,
+    },
 });
 
 export default ViewFundStyles;
