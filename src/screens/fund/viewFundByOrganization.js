@@ -1,15 +1,28 @@
-import React from 'react'
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { Alert, Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import FAcon from 'react-native-vector-icons/Feather';
 import Micon from 'react-native-vector-icons/MaterialIcons';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import VerticleSpace from '../../components/organization/VerticleSpace';
-import { ProgressBar } from 'react-native-paper';
+import { ProgressBar, Snackbar } from 'react-native-paper';
 import ViewFundStyles from './styles/ViewFundStyles';
 import HorizontalLine from '../../components/organization/HorizontalLine';
+import ModalStyles from './styles/ModalStyles';
+import { removeFund } from '../../api/fund.api';
 
 function ViewFundByOrganization({ navigation, route }) {
-    const { title, image, target, donors, daysLeft, raised, budget, description } = route.params;
+    const { fundID, title, image, target, donors, daysLeft, raised, budget, description } = route.params;
+    const [modalVisible, setModalVisible] = useState(false);
+    // console.log(route.params);
+
+    const deleteFund = () => {
+        console.log(fundID);
+        removeFund(fundID).then(res => {
+            navigation.navigate("OrgFunds", { snackNotification: "Successfully Deleted" });
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     return (
         <SafeAreaProvider style={{
@@ -35,7 +48,7 @@ function ViewFundByOrganization({ navigation, route }) {
                             }}>
                             <FAcon name='edit' color='#13B156' size={24} />
                         </Pressable>
-                        <Pressable onPress={() => { navigation.navigate('deleteFund') }}>
+                        <Pressable onPress={() => { setModalVisible(true) }}>
                             <FAcon name='trash' color='#FF395E' size={24} />
                         </Pressable>
                     </View>
@@ -142,8 +155,43 @@ function ViewFundByOrganization({ navigation, route }) {
                     </View>
                 </View>
             </ScrollView>
+
+            {/* Delete confirmation modal */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={ModalStyles.background}>
+                    <View style={ModalStyles.centeredView}>
+                        <View style={ModalStyles.modalView}>
+                            <FAcon name='trash-2' color='#FF395E' size={45} />
+                            <Text style={ModalStyles.modalText}>Are you sure you want to delete this fundraising?</Text>
+                            <View style={ModalStyles.buttonContainer}>
+                                <Pressable
+                                    style={[ModalStyles.button, ModalStyles.btnDeleteNo]}
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                >
+                                    <Text style={ModalStyles.btnDeleteNoText}>NO</Text>
+                                </Pressable>
+                                <Pressable
+                                    style={[ModalStyles.button, ModalStyles.btnDeleteYes]}
+                                    onPress={deleteFund}
+                                >
+                                    <Text style={ModalStyles.btnDeleteYesText}>YES</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaProvider>
     )
 }
+
+
 
 export default ViewFundByOrganization
