@@ -18,8 +18,11 @@ const PendingReqView = ({ route }) => {
   const navigation = useNavigation();
 
   const [loading, setLoading] = useState(false);
+  const [onChangeReq, setOnChange] = useState(false);
+
   const [donations, setDonations] = useState([]);
-  console.log(donationId);
+  // console.log(donationId);
+
   useEffect(() => {
     setLoading(true);
     if (fromAccepted) {
@@ -49,7 +52,8 @@ const PendingReqView = ({ route }) => {
           console.log(err.response);
         });
     }
-  }, []);
+  }, [onChangeReq]);
+
   return (
     <View style={pendingReqViewStyles.mainView}>
       <View style={{ flexDirection: "row", marginTop: 30 }}>
@@ -80,6 +84,8 @@ const PendingReqView = ({ route }) => {
                 requesterContact={donation.requesterContact}
                 requesterEmail={donation.requesterEmail}
                 fromAccepted={fromAccepted}
+                donationId={donation._id}
+                onChangeReq={(value) => setOnChange(value)}
               />
             );
           })}
@@ -88,7 +94,5 @@ const PendingReqView = ({ route }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default PendingReqView;

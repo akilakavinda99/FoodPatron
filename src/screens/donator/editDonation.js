@@ -23,7 +23,9 @@ const EditDonation = ({ route }) => {
   const [donationTitle, setDonationTitle] = useState(donation.donationTitle);
   const [location, setLocation] = useState(donation.location);
   const [email, setEmail] = useState(donation.email);
-  const [contactNumber, setNumber] = useState(donation.contactNumber);
+  const [contactNumber, setNumber] = useState(
+    donation.contactNumber.toString()
+  );
   const [donationDescription, setDescription] = useState(
     donation.donationDescription
   );

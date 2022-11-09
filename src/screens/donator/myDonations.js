@@ -4,11 +4,12 @@ import { IconButton, TextInput } from "react-native-paper";
 import MyDonationCard from "../../components/donator/MyDonationCard";
 import { getUserDonation } from "../../api/donator.api";
 import myDonationStyles from "./styles/MyDonationStyles";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 const MyDonations = () => {
   const userId = "63425985a2f0b4b546de6621";
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
@@ -26,7 +27,22 @@ const MyDonations = () => {
         Alert.alert("An Error Occoured");
         console.log(err.response);
       });
-  }, []);
+  }, [isFocused]);
+
+  const getDonations = () => {
+    getUserDonation(userId)
+      .then((res) => {
+        console.log(res.data);
+        setDonations(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+
+        Alert.alert("An Error Occoured");
+        console.log(err.response);
+      });
+  };
   return (
     <View>
       <View style={{ flexDirection: "row", marginTop: 20 }}>
@@ -67,7 +83,10 @@ const MyDonations = () => {
                   title={donation.donationTitle}
                   imageUrl={donation.donationImage}
                   donation={donation}
-                  onMark={(value) => setLoading(value)}
+                  onMark={(value) => {
+                    setLoading(value);
+                    getDonations();
+                  }}
                   status={donation.status}
                 />
               );
