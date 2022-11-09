@@ -3,11 +3,12 @@ import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { ProgressBar, Colors } from 'react-native-paper';
 
-function OrganizationFundsCard({ fundID, title, image, target, donors, daysLeft, raised, budget, description, status }) {
+function OrganizationFundsCard({ fundID, title, image, target, donors, daysLeft, raised, budget, description, status, userType }) {
     const navigation = useNavigation();
 
     return (
         <Pressable onPress={() => {
+            if(userType == 'organization') {
             navigation.navigate('viewFundByOrg', {
                 title: title,
                 image: image,
@@ -19,7 +20,20 @@ function OrganizationFundsCard({ fundID, title, image, target, donors, daysLeft,
                 description: description,
                 fundID: fundID,
                 status: status,
-            })
+            })} else {
+                navigation.navigate('viewFundByIndividual', {
+                    title: title,
+                    image: image,
+                    target: target,
+                    donors: donors,
+                    daysLeft: daysLeft,
+                    raised: raised,
+                    budget: budget,
+                    description: description,
+                    fundID: fundID,
+                    status: status,
+                })
+            }
         }}>
             <View style={{
                 backgroundColor: "#fff",
