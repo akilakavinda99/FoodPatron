@@ -4,7 +4,7 @@ import { FAB, IconButton, TextInput } from "react-native-paper";
 import SearchBar from '../../components/requester/SearchBar';
 import RequestCard from '../../components/requester/RequestCard';
 
-export default function AllRequests() {
+export default function MyRequests() {
   return (
     <View style={{
         backgroundColor: 'white',
@@ -21,7 +21,7 @@ export default function AllRequests() {
                 marginLeft: 50,
                 fontSize: 20,
                 fontWeight: 'bold',
-            }}> Fund Requests</Text>
+            }}> My Fund Requests</Text>
         </View>
 
         <SearchBar />
