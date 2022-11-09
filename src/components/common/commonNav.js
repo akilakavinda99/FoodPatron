@@ -6,6 +6,7 @@ import FA5Icon from "react-native-vector-icons/FontAwesome5";
 import AllDonations from "../../screens/donator/allDonations";
 import ViewAllFunds from "../../screens/fundsForIndividuals/viewAllFunds";
 import SecondScreen from "../../screens/secondScreen";
+import AllRequests from "../../screens/requester/allRequests";
 
 const CommonBottomNav = () => {
   const Tab = createBottomTabNavigator();
@@ -70,6 +71,28 @@ const CommonBottomNav = () => {
         options={{
           headerShown: false,
           title: "Funds",
+          tabBarIcon: ({ color, size, focused }) =>
+            focused ? (
+              <MIcon
+                name="hand-heart-outline"
+                color="#13B156"
+                size={size}
+                style={styles.iconStyles}
+              />
+            ) : (
+              <MIcon name="hand-heart-outline" color="#13B156" size={size} />
+            ),
+          tabBarLabelStyle: {
+            color: "#13B156",
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Requests"
+        component={AllRequests}
+        options={{
+          headerShown: false,
+          title: "Requests",
           tabBarIcon: ({ color, size, focused }) =>
             focused ? (
               <MIcon
