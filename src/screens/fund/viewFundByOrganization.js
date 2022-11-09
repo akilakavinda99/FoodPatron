@@ -39,7 +39,7 @@ function ViewFundByOrganization({ navigation, route }) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                 }}>
-                    <Pressable onPress={() => { navigation.goBack() }}>
+                    <Pressable onPress={() => { navigation.navigate("OrgFunds") }}>
                         <FAcon name='arrow-left' color='#13B156' size={24} />
                     </Pressable>
                     <View style={{

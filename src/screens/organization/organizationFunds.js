@@ -16,19 +16,21 @@ function OrganizationFunds({ snackNotification }) {
     const isFocused = useIsFocused();
 
     const [funds, setFunds] = useState([]);
+    const [filteredFunds, setFilteredFunds] = useState([]);
     const [showingFunds, setShowingFunds] = useState([]);
     const [searchTerm, setsearchTerm] = useState("");
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [snackBarVisible, setSnackBarVisible] = useState(false);
+    const [filterChip, setFilterChip] = useState("");
 
-    useEffect(() => {
-        if (snackNotification) {
-            // setSnackBarVisible(true);
-            // snackNotification = "";
-            // route.params.snackNotification = "";
-        }
-    }, [snackNotification, isFocused])
+    // useEffect(() => {
+    //     if (snackNotification) {
+    //         setSnackBarVisible(true);
+    //         snackNotification = "";
+    //         route.params.snackNotification = "";
+    //     }
+    // }, [snackNotification, isFocused])
 
 
     useEffect(() => {
@@ -43,11 +45,12 @@ function OrganizationFunds({ snackNotification }) {
     }, [organizationID, isFocused]);
 
     useEffect(() => {
-        setShowingFunds(funds.filter(fund =>
+        setShowingFunds(funds.filter(fund => (
             fund.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            fund.description.toLowerCase().includes(searchTerm.toLowerCase())
+            fund.description.toLowerCase().includes(searchTerm.toLowerCase())) &&
+            fund.status.toLowerCase().includes(filterChip.toLowerCase())
         ))
-    }, [searchTerm, funds])
+    }, [filterChip, searchTerm, funds])
 
     const onRefresh = () => {
         setRefreshing(true);
@@ -67,7 +70,8 @@ function OrganizationFunds({ snackNotification }) {
         }}>
             <PageHeader title="Organization Funds" icon="heart" />
             <CustomeSearchBar onSearch={(search) => { setsearchTerm(search) }} />
-            <FundFilterChips />
+            <FundFilterChips selectedChip={filterChip} onSelectChip={(value) => { setFilterChip(value) }} />
+
             <ScrollView refreshControl={
                 <RefreshControl
                     refreshing={refreshing}

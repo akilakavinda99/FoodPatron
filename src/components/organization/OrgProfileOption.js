@@ -7,7 +7,7 @@ function OrgProfileOption({ title, icon, onPress }) {
     const navigation = useNavigation();
 
     return (
-        <Pressable onPress={() => { console.log(onPress); }}>
+        <Pressable onPress={() => { navigation.navigate(onPress) }}>
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
