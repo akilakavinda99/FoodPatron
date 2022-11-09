@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import ImageUpload from '../../components/donator/ImageUpload'
 import FormDatePicker from '../../components/organization/FormDatePicker'
@@ -13,15 +13,19 @@ import pickImage from '../../utils/imageConverter'
 import ViewFundStyles from './styles/ViewFundStyles'
 import { FundFormValidation } from '../../components/organization/FundFormValidation'
 import { newFund } from '../../api/fund.api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 function CreateOrganizationFund() {
-    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    // const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    // const organizationID = AsyncStorage.getItem("userID")
     const navigation = useNavigation();
     const isFocused = useIsFocused();
 
     const [selectedImage, setSelectedImage] = useState(null);
     const [fundData, setFundData] = useState({})
     const [formErrors, setFormErrors] = useState({})
+    const [organizationID, setOrganizationID] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -29,7 +33,13 @@ function CreateOrganizationFund() {
         setFundData({ ...fundData, [name]: value })
     }
 
+    const getOrgID = async () => {
+        const orgID = await AsyncStorage.getItem("userID");
+        setOrganizationID(orgID);
+    }
+
     const onSubmitPress = () => {
+        setLoading(true);
         setFormErrors(FundFormValidation(fundData))
         setIsSubmitting(true)
     }
@@ -50,17 +60,21 @@ function CreateOrganizationFund() {
             }).catch(err => {
                 console.log(err);
             })
+            setLoading(false);
             setIsSubmitting(false)
         } else {
+            setLoading(false);
             setIsSubmitting(false)
         }
     }, [formErrors, isSubmitting])
 
     useEffect(() => {
+        getOrgID();
         setFundData({})
         setFormErrors({})
         setIsSubmitting(false)
         setSelectedImage(null);
+        setLoading(false);
     }, [isFocused])
 
     return (
@@ -128,7 +142,10 @@ function CreateOrganizationFund() {
                         height: 55,
                         marginVertical: 24,
                     }}>
-                        <GradientButton text="Create Fund" onPress={onSubmitPress} />
+                        {loading ?
+                            <ActivityIndicator size="large" color="#13B156" /> :
+                            <GradientButton text="Create Fund" onPress={onSubmitPress} />
+                        }
                     </View>
                 </ScrollView>
             </View>

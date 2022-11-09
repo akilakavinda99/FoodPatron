@@ -11,33 +11,43 @@ import { getOrganizationByID, getOrgDashSummary } from '../../api/organization.a
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { logOut } from '../../utils/logout';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 function OrganizationProfile() {
     const navigation = useNavigation();
-    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    const isFocused = useIsFocused();
+    // const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    const [organizationID, setOrganizationID] = useState("");
     const [orgSummary, setOrgSummary] = useState({
         totalFundsAmount: 0,
         activeFunds: 0,
         totalDonors: 0,
     });
-    const [orgName, setOrgName] = useState("");
+    const [orgName, setOrgName] = useState("Loading...");
+
+    const getOrgID = async () => {
+        const orgID = await AsyncStorage.getItem("userID");
+        setOrganizationID(orgID);
+    }
 
     useEffect(() => {
-        getOrgDashSummary(organizationID)
-            .then((res) => {
-                setOrgSummary(res.data.summary);
-            }).catch((err) => {
-                console.log(err);
-            });
+        getOrgID();
+        if (organizationID !== "") {
+            getOrgDashSummary(organizationID)
+                .then((res) => {
+                    setOrgSummary(res.data.summary);
+                }).catch((err) => {
+                    console.log(err);
+                });
 
-        getOrganizationByID(organizationID)
-            .then(res => {
-                setOrgName(res.data.organization.name);
-            }).catch(err => {
-                console.log(err);
-            })
-    }, [organizationID]);
+            getOrganizationByID(organizationID)
+                .then(res => {
+                    setOrgName(res.data.organization.name);
+                }).catch(err => {
+                    console.log(err);
+                })
+        }
+    }, [organizationID, isFocused]);
 
     // add comma before every 3 digits and add .00 at the end
     const numberWithCommas = (x) => {
@@ -152,35 +162,35 @@ function OrganizationProfile() {
                     <HorizontalLine />
                     <OrgProfileOption title="Change Password" icon="lock" onPress="orgFunds" />
                     <HorizontalLine />
-                    <Pressable onPress={()=>{
+                    <Pressable onPress={() => {
                         logOut();
                         navigation.reset({
                             index: 0,
                             routes: [{ name: 'signInIn' }],
                         });
                     }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                paddingVertical: 10,
-                                paddingHorizontal: 10,
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            paddingVertical: 10,
+                            paddingHorizontal: 10,
 
+                        }}>
+                            <Text style={{
+                                fontSize: 16,
+                                fontWeight: '700',
+                            }}>Logout</Text>
+                            <View style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: '#FFE8ED',
+                                borderRadius: 50,
+                                padding: 5,
                             }}>
-                                <Text style={{
-                                    fontSize: 16,
-                                    fontWeight: '700',
-                                }}>Logout</Text>
-                                <View style={{
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    backgroundColor: '#FFE8ED',
-                                    borderRadius: 50,
-                                    padding: 5,
-                                }}>
-                                    <MIcon name='logout' size={24} color="#FF395E" />
-                                </View>
+                                <MIcon name='logout' size={24} color="#FF395E" />
                             </View>
+                        </View>
                     </Pressable>
                     <HorizontalLine />
                 </View>
