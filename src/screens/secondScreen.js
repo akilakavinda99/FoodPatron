@@ -16,6 +16,7 @@ import axios from "axios";
 import PascalCase from "../components/PascalCase";
 import DonatorCard from "../components/donator/DonatorCard";
 import { useNavigation } from "@react-navigation/native";
+import { logOut } from "../utils/logout";
 
 export default function SecondScreen() {
   const [image, setImage] = useState(null);
@@ -243,7 +244,13 @@ export default function SecondScreen() {
       <Text>Dsd</Text>
       <Text>Dsd</Text> */}
 
-        <Button title="Go back" onPress={() => btnsbmit()} />
+        <Button title="Go back" onPress={() => {
+          logOut()
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'signInIn' }],
+          });
+        }} />
         {/* <View style={styles.centering}>
         <LinearGradient
           // Button Linear Gradient
