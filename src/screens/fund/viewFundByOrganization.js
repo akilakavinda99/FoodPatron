@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Alert, Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import FAcon from 'react-native-vector-icons/Feather';
 import Micon from 'react-native-vector-icons/MaterialIcons';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
@@ -13,14 +13,17 @@ import { removeFund } from '../../api/fund.api';
 function ViewFundByOrganization({ navigation, route }) {
     const { fundID, title, image, target, donors, daysLeft, raised, budget, description } = route.params;
     const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     // console.log(route.params);
 
     const deleteFund = () => {
-        console.log(fundID);
+        setLoading(true);
         removeFund(fundID).then(res => {
             navigation.navigate("OrgFunds", { snackNotification: "Successfully Deleted" });
         }).catch(err => {
             console.log(err);
+        }).finally(() => {
+            setLoading(false);
         })
     }
 
@@ -168,22 +171,25 @@ function ViewFundByOrganization({ navigation, route }) {
                 <View style={ModalStyles.background}>
                     <View style={ModalStyles.centeredView}>
                         <View style={ModalStyles.modalView}>
-                            <FAcon name='trash-2' color='#FF395E' size={45} />
-                            <Text style={ModalStyles.modalText}>Are you sure you want to delete this fundraising?</Text>
-                            <View style={ModalStyles.buttonContainer}>
-                                <Pressable
-                                    style={[ModalStyles.button, ModalStyles.btnDeleteNo]}
-                                    onPress={() => setModalVisible(!modalVisible)}
-                                >
-                                    <Text style={ModalStyles.btnDeleteNoText}>NO</Text>
-                                </Pressable>
-                                <Pressable
-                                    style={[ModalStyles.button, ModalStyles.btnDeleteYes]}
-                                    onPress={deleteFund}
-                                >
-                                    <Text style={ModalStyles.btnDeleteYesText}>YES</Text>
-                                </Pressable>
-                            </View>
+                            {loading ? <ActivityIndicator size="large" color="#13B156" /> :
+                                (<>
+                                    <FAcon name='trash-2' color='#FF395E' size={45} />
+                                    <Text style={ModalStyles.modalText}>Are you sure you want to delete this fundraising?</Text>
+                                    <View style={ModalStyles.buttonContainer}>
+                                        <Pressable
+                                            style={[ModalStyles.button, ModalStyles.btnDeleteNo]}
+                                            onPress={() => setModalVisible(!modalVisible)}
+                                        >
+                                            <Text style={ModalStyles.btnDeleteNoText}>NO</Text>
+                                        </Pressable>
+                                        <Pressable
+                                            style={[ModalStyles.button, ModalStyles.btnDeleteYes]}
+                                            onPress={deleteFund}
+                                        >
+                                            <Text style={ModalStyles.btnDeleteYesText}>YES</Text>
+                                        </Pressable>
+                                    </View>
+                                </>)}
                         </View>
                     </View>
                 </View>

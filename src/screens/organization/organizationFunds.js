@@ -40,7 +40,7 @@ function OrganizationFunds({ snackNotification }) {
             }).catch((err) => {
                 console.log(err);
             });
-    }, [organizationID]);
+    }, [organizationID, isFocused]);
 
     useEffect(() => {
         setShowingFunds(funds.filter(fund =>
