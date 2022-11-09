@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import FormTextInput from '../../components/user/FormTextInput';
 import GradientButton from '../../components/user/Button';
-import FormCheckBox from '../../components/user/FormCheckBox';
+// import FormCheckBox from '../../components/user/FormCheckBox';
+import { Checkbox } from "react-native-paper";
+
 import { 
     Text,
-    View
+    View,
+    Image,
 } from 'react-native'
 
 
@@ -18,12 +21,25 @@ const SignIn = () => {
             backgroundColor: "white",
             height: "100%",
         }}>
+
+                    <Image
+                        style={{
+                            height: 120,
+                            width: 120,
+                            alignSelf: "center",
+                            marginTop: 60,
+
+                        }}
+                        resizeMode="cover"
+                        source={require('../../../assets/signin.png')}
+                    />
+
             <Text style={{
                 fontSize: 25,
                 fontWeight: "bold",
                 color: "#56616F",
                 paddingHorizontal: 20,
-                paddingTop: 80,
+                paddingTop: 20,
                 textAlign: "center",
             }}>Sign in to your account</Text>
 
@@ -48,11 +64,19 @@ const SignIn = () => {
                     paddingTop: 10,
                 }}
             >
-                <FormCheckBox
-                    title="Remember me"
+                <Checkbox
+                    color="#000000"
+                    // title="Remember me"
                     // checked={checked}
                     // onPress={() => setChecked(!checked)}
                 />
+
+                <Text style={{
+                    color: "#000000",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                }}>Remember me</Text>
+
             </View>
 
             <View style={{
