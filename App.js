@@ -36,6 +36,7 @@ import DonateFund from "./src/screens/fundsForIndividuals/donateFund";
 import EditFund from "./src/screens/fund/editFund";
 import UpdateOrganizationDetails from "./src/screens/organization/updateOrganizationDetails";
 import ViewFundRequest from "./src/screens/requester/ViewFundRequest";
+import UpdateOrgMemberDetails from "./src/screens/organization/updateOrgMemberDetails";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -222,6 +223,11 @@ export default function App() {
         <Stack.Screen
           name="updateOrgDetails"
           component={UpdateOrganizationDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="updateOrgMemberDetails"
+          component={UpdateOrgMemberDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -144,3 +144,45 @@ export const OrgDetailsUpdateValidation = (values) => {
 
     return errors;
 }
+
+export const OrgMemberUpdateValidation = (values) => {
+    errors = {};
+
+    if (!values.presidentName) {
+        errors.presidentName = 'President Name is required';
+    } else if (!letterPattern.test(values.presidentName)) {
+        errors.presidentName = "President's name can only contain letters";
+    }
+
+    if (!values.presidentEmail) {
+        errors.presidentEmail = 'President Email is required';
+    } else if (!emailPattern.test(values.presidentEmail)) {
+        errors.presidentEmail = 'Invalid email address';
+    }
+
+    if (!values.presidentContactNumber) {
+        errors.presidentContactNumber = 'President mobile number is required';
+    } else if (!phonePattern.test(values.presidentContactNumber)) {
+        errors.presidentContactNumber = 'Invalid phone number';
+    }
+
+    if (!values.secretaryName) {
+        errors.secretaryName = 'Secretary Name is required';
+    } else if (!letterPattern.test(values.secretaryName)) {
+        errors.secretaryName = "Secretary's name can only contain letters";
+    }
+
+    if (!values.secretaryEmail) {
+        errors.secretaryEmail = 'Secretary Email is required';
+    } else if (!emailPattern.test(values.secretaryEmail)) {
+        errors.secretaryEmail = 'Invalid email address';
+    }
+
+    if (!values.secretaryContactNumber) {
+        errors.secretaryContactNumber = 'Secretary mobile number is required';
+    } else if (!phonePattern.test(values.secretaryContactNumber)) {
+        errors.secretaryContactNumber = 'Invalid phone number';
+    }
+
+    return errors;
+}

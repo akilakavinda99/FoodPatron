@@ -7,7 +7,7 @@ import HorizontalLine from '../../components/organization/HorizontalLine';
 import VerticalLine from '../../components/organization/VerticalLine';
 import OrgProfileOption from '../../components/organization/OrgProfileOption';
 import VerticleSpace from '../../components/organization/VerticleSpace';
-import { getOrgDashSummary } from '../../api/organization.api';
+import { getOrganizationByID, getOrgDashSummary } from '../../api/organization.api';
 
 function OrganizationProfile() {
     const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
@@ -16,6 +16,7 @@ function OrganizationProfile() {
         activeFunds: 0,
         totalDonors: 0,
     });
+    const [orgName, setOrgName] = useState("");
 
     useEffect(() => {
         getOrgDashSummary(organizationID)
@@ -24,6 +25,13 @@ function OrganizationProfile() {
             }).catch((err) => {
                 console.log(err);
             });
+
+        getOrganizationByID(organizationID)
+            .then(res => {
+                setOrgName(res.data.organization.name);
+            }).catch(err => {
+                console.log(err);
+            })
     }, [organizationID]);
 
     // add comma before every 3 digits and add .00 at the end
@@ -63,7 +71,7 @@ function OrganizationProfile() {
                         marginTop: 10,
                         fontSize: 22,
                         fontWeight: '600',
-                    }}>Food Patron</Text>
+                    }}>{orgName}</Text>
                 </View>
 
 
@@ -133,7 +141,7 @@ function OrganizationProfile() {
                     <HorizontalLine />
                     <OrgProfileOption title="Edit Organization Details" icon="edit" onPress="updateOrgDetails" />
                     <HorizontalLine />
-                    <OrgProfileOption title="Edit Member Details" icon="people" onPress="orgFunds" />
+                    <OrgProfileOption title="Edit Member Details" icon="people" onPress="updateOrgMemberDetails" />
                     <HorizontalLine />
                     <OrgProfileOption title="Link Social Media" icon="language" onPress="orgFunds" />
                     <HorizontalLine />
