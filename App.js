@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SecondScreen from "./src/screens/secondScreen";
 import HomeScreen from "./src/screens/homeScreen";
 
-
 import DonationView from "./src/screens/donator/donationView";
 import AllDonations from "./src/screens/donator/allDonations";
 import CreateDonation from "./src/screens/donator/createDonation";
@@ -36,6 +35,7 @@ import OrgProfileView from "./src/screens/fundsForIndividuals/orgProfileView";
 import DonateFund from "./src/screens/fundsForIndividuals/donateFund";
 import EditFund from "./src/screens/fund/editFund";
 import UpdateOrganizationDetails from "./src/screens/organization/updateOrganizationDetails";
+import ViewFundRequest from "./src/screens/requester/ViewFundRequest";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -222,6 +222,11 @@ export default function App() {
         <Stack.Screen
           name="updateOrgDetails"
           component={UpdateOrganizationDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="fundReqView"
+          component={ViewFundRequest}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
