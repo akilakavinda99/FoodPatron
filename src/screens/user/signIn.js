@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import FormTextInput from '../../components/user/FormTextInput';
 import GradientButton from '../../components/user/Button';
-import FormCheckBox from '../../components/user/FormCheckBox';
+// import FormCheckBox from '../../components/user/FormCheckBox';
+import { Checkbox } from "react-native-paper";
+
 import { 
     Text,
     View,
@@ -62,11 +64,19 @@ const SignIn = () => {
                     paddingTop: 10,
                 }}
             >
-                <FormCheckBox
-                    title="Remember me"
+                <Checkbox
+                    color="#000000"
+                    // title="Remember me"
                     // checked={checked}
                     // onPress={() => setChecked(!checked)}
                 />
+
+                <Text style={{
+                    color: "#000000",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                }}>Remember me</Text>
+
             </View>
 
             <View style={{

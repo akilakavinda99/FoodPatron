@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     mainView: {
         width: 375,
         height: 117,
-        backgroundColor: "#d0d0d0",
+        backgroundColor: "#F6F6F6",
         borderRadius: 10,
         marginLeft: 20,
         marginRight: 20,
