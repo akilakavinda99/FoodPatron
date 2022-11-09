@@ -1,8 +1,36 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Alert, Linking } from "react-native";
 import { Button } from "react-native-paper";
+import {
+  acceptDonationRequest,
+  rejectDonationRequest,
+} from "../../api/donator.api";
 
 const PendingReqViewCard = (props) => {
+  const acceptRequest = () => {
+    acceptDonationRequest(props.donationId)
+      .then((res) => {
+        Alert.alert("Accepted", "Request Successfully Accepted");
+        props.onChangeReq(true);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        Alert.alert("Error", "Error");
+      });
+  };
+
+  const rejectRequest = () => {
+    rejectDonationRequest(props.donationId)
+      .then((res) => {
+        Alert.alert("Rejected", "Request Successfully Rejected");
+        props.onChangeReq(true);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        Alert.alert("Error", "Error");
+      });
+  };
+
   return (
     <View
       style={{
@@ -72,6 +100,9 @@ const PendingReqViewCard = (props) => {
         >
           {props.fromAccepted ? (
             <Button
+              onPress={() => {
+                Linking.openURL(`tel:${props.requesterContact}`);
+              }}
               mode="contained"
               color="blue"
               style={{
@@ -83,6 +114,7 @@ const PendingReqViewCard = (props) => {
           ) : (
             <>
               <Button
+                onPress={acceptRequest}
                 mode="contained"
                 color="green"
                 style={{
@@ -92,6 +124,7 @@ const PendingReqViewCard = (props) => {
                 Accept
               </Button>
               <Button
+                onPress={rejectRequest}
                 mode="contained"
                 color="red"
                 style={{
