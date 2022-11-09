@@ -5,7 +5,8 @@ import FormCheckBox from '../../components/user/FormCheckBox';
 import { 
     Text,
     View,
-    ScrollView
+    ScrollView,
+    Image,
 } from 'react-native'
 
 const SignUp = () => {
@@ -19,12 +20,25 @@ const SignUp = () => {
             height: "100%",
         }}>
             <ScrollView>
+
+                    <Image
+                        style={{
+                            height: 120,
+                            width: 190,
+                            alignSelf: "center",
+                            marginTop: 60,
+
+                        }}
+                        resizeMode="cover"
+                        source={require('../../../assets/signup.png')}
+                    />
+
             <Text style={{
                 fontSize: 25,
                 fontWeight: "bold",
                 color: "#56616F",
                 paddingHorizontal: 20,
-                paddingTop: 80,
+                paddingTop: 20,
                 textAlign: "center",
             }}>Sign up for free</Text>
 
@@ -63,7 +77,7 @@ const SignUp = () => {
                     paddingHorizontal: 20,
                     paddingTop: 10,
                 }}
-            >
+            >    
                 <FormCheckBox
                     title="Remember me"
                     // checked={checked}
