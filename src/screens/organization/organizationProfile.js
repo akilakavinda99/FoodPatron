@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import PageHeader from '../../components/organization/PageHeader'
@@ -7,8 +7,26 @@ import HorizontalLine from '../../components/organization/HorizontalLine';
 import VerticalLine from '../../components/organization/VerticalLine';
 import OrgProfileOption from '../../components/organization/OrgProfileOption';
 import VerticleSpace from '../../components/organization/VerticleSpace';
+import { getOrgDashSummary } from '../../api/organization.api';
 
 function OrganizationProfile() {
+    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    const [orgSummary, setOrgSummary] = useState({});
+
+    useEffect(() => {
+        getOrgDashSummary(organizationID)
+            .then((res) => {
+                setOrgSummary(res.data.summary);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }, [organizationID]);
+
+    // add comma before every 3 digits and add .00 at the end
+    const numberWithCommas = (x) => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";
+    }
+
     return (
         <SafeAreaProvider style={{
             flex: 1,
@@ -65,7 +83,7 @@ function OrganizationProfile() {
                             <Text style={{
                                 fontSize: 15,
                                 fontWeight: '700',
-                            }}>145,000</Text>
+                            }}>{numberWithCommas(orgSummary.totalFundsAmount)}</Text>
                             <Text style={{
                                 fontSize: 15,
                             }}>Raised (Rs.)</Text>
@@ -79,7 +97,7 @@ function OrganizationProfile() {
                             <Text style={{
                                 fontSize: 15,
                                 fontWeight: '700',
-                            }}>3</Text>
+                            }}>{orgSummary.activeFunds}</Text>
                             <Text style={{
                                 fontSize: 15,
                             }}>Active Funds</Text>
@@ -93,7 +111,7 @@ function OrganizationProfile() {
                             <Text style={{
                                 fontSize: 15,
                                 fontWeight: '700',
-                            }}>47</Text>
+                            }}>{orgSummary.totalDonors}</Text>
                             <Text style={{
                                 fontSize: 15,
                             }}>Contributors</Text>
@@ -104,7 +122,7 @@ function OrganizationProfile() {
 
                     <VerticleSpace height={10} />
 
-                    <OrgProfileOption title="Organization Funds" icon="toll" onPress="orgFunds" />
+                    <OrgProfileOption title="Organization Funds" icon="toll" onPress="OrgFunds" />
                     <HorizontalLine />
                     <OrgProfileOption title="Generate Reports" icon="assignment" onPress="orgFunds" />
                     <HorizontalLine />
