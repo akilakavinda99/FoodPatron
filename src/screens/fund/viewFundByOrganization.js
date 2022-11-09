@@ -45,7 +45,7 @@ function ViewFundByOrganization({ navigation, route }) {
                     <View style={{
                         flexDirection: 'row',
                     }}>
-                        <Pressable onPress={() => { navigation.navigate('editFund') }}
+                        <Pressable onPress={() => { navigation.navigate('editFund', { fundID: fundID }) }}
                             style={{
                                 marginRight: 20,
                             }}>
@@ -99,7 +99,7 @@ function ViewFundByOrganization({ navigation, route }) {
                         justifyContent: 'space-between',
                     }}>
                         <Text style={ViewFundStyles.label}>Budget</Text>
-                        <Text style={ViewFundStyles.text}>Rs.{raised}.00</Text>
+                        <Text style={ViewFundStyles.text}>Rs.{budget}.00</Text>
                     </View>
 
                     <View style={{
