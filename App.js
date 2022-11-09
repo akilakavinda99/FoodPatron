@@ -22,11 +22,9 @@ import CreateOrganizationFund from "./src/screens/fund/createOrganizationFund";
 import OrganizationNavigation from "./src/components/organization/OrganizationNavigation";
 import EditDonation from "./src/screens/donator/editDonation";
 import PendingRequestss from "./src/screens/donator/pendingRequests";
-import PendingReqViewCard from "./src/components/donator/pendingReqViewCard";
 import PendingReqView from "./src/screens/donator/pendingReqView";
 import AcceptedRequests from "./src/screens/donator/acceptedRequests";
 import ViewFundByOrganization from "./src/screens/fund/viewFundByOrganization";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommonBottomNav from "./src/components/common/commonNav";
 import ViewRequestByOrganization from "./src/screens/request/viewRequestByOrganization";
 import ViewFundByIndividual from "./src/screens/fundsForIndividuals/viewFundByIndividual";
@@ -37,27 +35,22 @@ import EditFund from "./src/screens/fund/editFund";
 import UpdateOrganizationDetails from "./src/screens/organization/updateOrganizationDetails";
 import ViewFundRequest from "./src/screens/requester/ViewFundRequest";
 import UpdateOrgMemberDetails from "./src/screens/organization/updateOrgMemberDetails";
+import SignIn from "./src/screens/user/signIn";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
   const [firstLaunch, setFirstLaunch] = useState(null);
-  const [userType, setUserType] = useState("organization");
-
-  // Show bottom tab bar only if the user is logged in
-  function MainTabs() {
-    if (userType === "individual") {
-      // Individual navigation bar
-    } else if (userType === "organization") {
-      // Organization navigation bar
-      return <OrganizationNavigation />;
-    } else {
-      return null;
-    }
-  }
+  const [userEmail, setUserEmail] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+  const [userID, setUserID] = useState(null);
 
   useEffect(() => {
     async function setData() {
       const appData = await AsyncStorage.getItem("appLaunched");
+      setUserEmail(await AsyncStorage.getItem("userEmail"))
+      setUserRole(await AsyncStorage.getItem("userRole"))
+      setUserID(await AsyncStorage.getItem("userID"))
+
       if (appData == null) {
         setFirstLaunch(true);
         AsyncStorage.setItem("appLaunched", "false");
@@ -68,16 +61,6 @@ export default function App() {
     setData();
   }, []);
 
-  useEffect(() => {
-    async function setUserType() {
-      const value = await AsyncStorage.getItem("userType");
-      if (value !== null) {
-        setUserType(value);
-      }
-    }
-    setUserType();
-  }, []);
-
   const Stack = createNativeStackNavigator();
 
   return (
@@ -85,19 +68,59 @@ export default function App() {
       <Stack.Navigator>
         {firstLaunch ? (
           <Stack.Screen name="first" component={OnboardingScreen} />
-        ) : (
+        ) : (userID === null ? (
           <Stack.Screen
-            name="second"
-            component={CommonBottomNav}
+            name="signIn"
+            component={SignIn}
             options={{ headerShown: false }}
           />
-          // <Stack.Screen
-          //   name="OrgHome"
-          //   component={OrganizationNavigation}
-          //   options={{ headerShown: false }}
-          // />
-        )}
+        ) : (userRole === "1984" ?
+          <Stack.Screen
+            name='userHome'
+            component={CommonBottomNav}
+            options={{ headerShown: false }} />
+          : (userRole === "5150" ?
+            <Stack.Screen
+              name="OrgHome"
+              component={OrganizationNavigation}
+              options={{ headerShown: false }}
+            />
+            : (userRole === "2001" ?
+              <Stack.Screen
+                name="AdminHome"
+                component={CommonBottomNav}
+                options={{ headerShown: false }}
+              />
+              : null)
+          )
+        ))}
+
         <Stack.Screen name="st" component={HomeScreen} />
+
+
+        {/* *************************************** */}
+        <Stack.Screen
+          name="signInIn"
+          component={SignIn}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='userHomeIn'
+          component={CommonBottomNav}
+          options={{ headerShown: false }} />
+        <Stack.Screen
+          name="OrgHomeIn"
+          component={OrganizationNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AdminHomeIn"
+          component={CommonBottomNav}
+          options={{ headerShown: false }}
+        />
+
+        {/* *************************************** */}
+
 
         <Stack.Screen
           name="donationView"
@@ -235,6 +258,7 @@ export default function App() {
           component={ViewFundRequest}
           options={{ headerShown: false }}
         />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

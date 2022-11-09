@@ -4,36 +4,65 @@ import GradientButton from '../../components/user/Button';
 // import FormCheckBox from '../../components/user/FormCheckBox';
 import { Checkbox } from "react-native-paper";
 
-import { 
+import {
     Text,
     View,
     Image,
 } from 'react-native'
-
+import { userSignIn } from '../../api/user.api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const SignIn = () => {
+    const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checked, setChecked] = useState(false);
-    
+    const [error, setError] = useState("");
+
+    const onSignIn = () => {
+        setError("");
+        userSignIn({ email, password })
+            .then((res) => {
+                let userRole = res.data.roles
+                AsyncStorage.setItem("userEmail", email);
+                AsyncStorage.setItem("userRole", userRole);
+                AsyncStorage.setItem("userID", res.data.userID);
+                AsyncStorage.setItem("userToken", res.data.accessToken);
+
+                try {
+                    if (userRole === "1984") {
+                        navigation.navigate("userHomeIn");
+                    } else if (userRole === "5150") {
+                        navigation.navigate("OrgHomeIn");
+                    } else if (userRole === "2001") {
+                        navigation.navigate("AdminHomeIn");
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+
+            }).catch((error) => {
+                setError(error.response.data.message);
+            })
+    }
+
     return (
         <View style={{
             backgroundColor: "white",
             height: "100%",
         }}>
+            <Image
+                style={{
+                    height: 120,
+                    width: 120,
+                    alignSelf: "center",
+                    marginTop: 60,
 
-                    <Image
-                        style={{
-                            height: 120,
-                            width: 120,
-                            alignSelf: "center",
-                            marginTop: 60,
-
-                        }}
-                        resizeMode="cover"
-                        source={require('../../../assets/signin.png')}
-                    />
-
+                }}
+                resizeMode="cover"
+                source={require('../../../assets/signin.png')}
+            />
             <Text style={{
                 fontSize: 25,
                 fontWeight: "bold",
@@ -43,49 +72,58 @@ const SignIn = () => {
                 textAlign: "center",
             }}>Sign in to your account</Text>
 
-            <FormTextInput 
-                title="Email Address" 
-                placeholder="Email Address" 
-                required={true} 
-                />
-                
-            <FormTextInput 
-                title="Password" 
-                placeholder="Password" 
-                required={true} 
-                />     
+            <FormTextInput
+                title="Email Address"
+                placeholder="Email Address"
+                keyboardType='email-address'
+                onChangeText={(text) => setEmail(text)} />
+
+            <FormTextInput
+                title="Password"
+                placeholder="Password"
+                secureTextEntry={true}
+                onChangeText={(text) => setPassword(text)} />
 
             <View
                 style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    // justifyContent: "space-between",
                     paddingHorizontal: 20,
                     paddingTop: 10,
-                }}
-            >
+                }}>
                 <Checkbox
-                    color="#000000"
+                    color="#13B156"
+                    uncheckedColor="#13B156"
                     // title="Remember me"
-                    // checked={checked}
-                    // onPress={() => setChecked(!checked)}
+                    status={checked ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked(!checked)}
                 />
-
                 <Text style={{
                     color: "#000000",
                     fontSize: 15,
                     fontWeight: "bold",
                 }}>Remember me</Text>
-
             </View>
 
             <View style={{
-                    height: 55,
-                    paddingHorizontal: 20,
-                    marginVertical: 24,
-                }}>
+                paddingHorizontal: 20,
+                paddingTop: 10,
+                alignItems: "center",
+            }}>
+                <Text style={{
+                    color: "#FF0000",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                }}>{error}</Text>
+            </View>
 
-                <GradientButton text="Sign in" />
+            <View style={{
+                height: 55,
+                paddingHorizontal: 20,
+                marginVertical: 24,
+            }}>
+                <GradientButton text="Sign in" onPress={() => onSignIn()} />
             </View>
 
             <View style={{
@@ -98,7 +136,7 @@ const SignIn = () => {
                     color: "#13B156",
                     fontWeight: "bold",
                 }}>Forgot Password?</Text>
-                
+
             </View>
 
             <View style={{
@@ -122,7 +160,7 @@ const SignIn = () => {
 
         </View>
 
-        
+
     )
 };
 
