@@ -30,6 +30,10 @@ import ViewFundByOrganization from "./src/screens/fund/viewFundByOrganization";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommonBottomNav from "./src/components/common/commonNav";
 import ViewRequestByOrganization from "./src/screens/request/viewRequestByOrganization";
+import ViewFundByIndividual from "./src/screens/fundsForIndividuals/viewFundByIndividual";
+import ViewAllFunds from "./src/screens/fundsForIndividuals/viewAllFunds";
+import OrgProfileView from "./src/screens/fundsForIndividuals/orgProfileView";
+import DonateFund from "./src/screens/fundsForIndividuals/donateFund";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -187,6 +191,26 @@ export default function App() {
           name="viewRequestByOrg"
           component={ViewRequestByOrganization}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="viewAllFunds"
+          component={ViewAllFunds}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="viewFundByIndividual"
+          component={ViewFundByIndividual}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="orgProfileView"
+          component={OrgProfileView}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="donateFund"
+          component={DonateFund}
+          options={{ title: "Donate" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

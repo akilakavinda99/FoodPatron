@@ -5,13 +5,12 @@ import { Snackbar } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Micon from 'react-native-vector-icons/MaterialIcons';
 import { getFundByOrganization } from '../../api/fund.api';
-import FundFilterChips from '../../components/organization/FundFilterChips';
 import OrganizationFundsCard from '../../components/organization/OrganizationFundsCard';
 import PageHeader from '../../components/organization/PageHeader'
 import CustomeSearchBar from '../../components/organization/SearchBar';
 import { getRemainingTime } from '../../utils/getRemainingTime';
 
-function OrganizationFunds({ snackNotification }) {
+function ViewAllFunds({ snackNotification }) {
     const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
     const isFocused = useIsFocused();
 
@@ -30,7 +29,6 @@ function OrganizationFunds({ snackNotification }) {
         }
     }, [snackNotification, isFocused])
 
-
     useEffect(() => {
         setLoading(true);
         getFundByOrganization(organizationID)
@@ -40,7 +38,7 @@ function OrganizationFunds({ snackNotification }) {
             }).catch((err) => {
                 console.log(err);
             });
-    }, [organizationID, isFocused]);
+    }, [organizationID]);
 
     useEffect(() => {
         setShowingFunds(funds.filter(fund =>
@@ -65,9 +63,9 @@ function OrganizationFunds({ snackNotification }) {
             flex: 1,
             backgroundColor: '#fff'
         }}>
-            <PageHeader title="Organization Funds" icon="heart" />
+            <PageHeader title="Food Patron" icon="heart" />
             <CustomeSearchBar onSearch={(search) => { setsearchTerm(search) }} />
-            <FundFilterChips />
+
             <ScrollView refreshControl={
                 <RefreshControl
                     refreshing={refreshing}
@@ -105,8 +103,7 @@ function OrganizationFunds({ snackNotification }) {
                             raised={fund.currentAmount}
                             budget={fund.budget}
                             description={fund.description}
-                            status={fund.status}
-                            userType='organization' />
+                            status={fund.status} />
                     ))
                 )}
 
@@ -129,4 +126,4 @@ function OrganizationFunds({ snackNotification }) {
     )
 }
 
-export default OrganizationFunds
+export default ViewAllFunds

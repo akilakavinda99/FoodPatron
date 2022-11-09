@@ -66,6 +66,13 @@ const ModalStyles = StyleSheet.create({
     btnDeleteYesText: {
         color: '#FF395E',
     },
+    btnOK: {
+        padding: 10,
+        backgroundColor: '#13B156',
+    },
+    btnOKText: {
+        color: 'white',
+    },
 });
 
 export default ModalStyles;
