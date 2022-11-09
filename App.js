@@ -35,6 +35,7 @@ import ViewAllFunds from "./src/screens/fundsForIndividuals/viewAllFunds";
 import OrgProfileView from "./src/screens/fundsForIndividuals/orgProfileView";
 import DonateFund from "./src/screens/fundsForIndividuals/donateFund";
 import EditFund from "./src/screens/fund/editFund";
+import UpdateOrganizationDetails from "./src/screens/organization/updateOrganizationDetails";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -90,8 +91,8 @@ export default function App() {
             options={{ headerShown: false }}
           />
           // <Stack.Screen
-          //   name="Home"
-          //   component={MainTabs}
+          //   name="OrgHome"
+          //   component={OrganizationNavigation}
           //   options={{ headerShown: false }}
           // />
         )}
@@ -216,6 +217,11 @@ export default function App() {
         <Stack.Screen
           name="editFund"
           component={EditFund}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="updateOrgDetails"
+          component={UpdateOrganizationDetails}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

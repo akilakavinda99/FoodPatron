@@ -11,7 +11,11 @@ import { getOrgDashSummary } from '../../api/organization.api';
 
 function OrganizationProfile() {
     const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
-    const [orgSummary, setOrgSummary] = useState({});
+    const [orgSummary, setOrgSummary] = useState({
+        totalFundsAmount: 0,
+        activeFunds: 0,
+        totalDonors: 0,
+    });
 
     useEffect(() => {
         getOrgDashSummary(organizationID)
@@ -24,7 +28,8 @@ function OrganizationProfile() {
 
     // add comma before every 3 digits and add .00 at the end
     const numberWithCommas = (x) => {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";
+        // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     return (
@@ -126,7 +131,7 @@ function OrganizationProfile() {
                     <HorizontalLine />
                     <OrgProfileOption title="Generate Reports" icon="assignment" onPress="orgFunds" />
                     <HorizontalLine />
-                    <OrgProfileOption title="Edit Organization Details" icon="edit" onPress="orgFunds" />
+                    <OrgProfileOption title="Edit Organization Details" icon="edit" onPress="updateOrgDetails" />
                     <HorizontalLine />
                     <OrgProfileOption title="Edit Member Details" icon="people" onPress="orgFunds" />
                     <HorizontalLine />
