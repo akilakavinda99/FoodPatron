@@ -2,38 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Chip } from 'react-native-paper'
 
-function FundFilterChips() {
-    const [selected, setSelected] = useState(false);
-    const [chipStyle, setChipStyle] = useState({
+function FundFilterChips({ selectedChip, onSelectChip }) {
+    const chipNotSelect = {
         backgroundColor: "#fff",
         borderColor: "#13B156",
         borderWidth: 1,
-        marginHorizontal: 10,
+        marginHorizontal: 5,
         marginVertical: 10,
-    })
+    }
+    const chipSelect = {
+        backgroundColor: "#E8F8EF",
+        borderColor: "#13B156",
+        borderWidth: 1,
+        marginHorizontal: 5,
+        marginVertical: 10,
+    }
 
-    useEffect(() => {
-        if (selected) {
-            setChipStyle({
-                backgroundColor: "#E8F8EF",
-                borderColor: "#13B156",
-                borderWidth: 1,
-                marginHorizontal: 5,
-                marginTop: 10,
-            })
-        } else {
-            setChipStyle({
-                backgroundColor: "#fff",
-                borderColor: "#13B156",
-                borderWidth: 1,
-                marginHorizontal: 5,
-                marginTop: 10,
-            })
-        }
-    }, [selected])
-
-    const onPressChip = () => {
-        setSelected(!selected);
+    const onPressChip = (value) => {
+        onSelectChip(value);
     }
 
     return (
@@ -43,37 +29,37 @@ function FundFilterChips() {
             marginHorizontal: 20,
         }}>
 
-            <Chip onPress={onPressChip}
+            <Chip onPress={() => onPressChip("")}
                 mode="outlined"
                 selectedColor="#13B156"
-                style={chipStyle}
+                style={selectedChip === "" ? chipSelect : chipNotSelect}
                 textStyle={{
                     fontSize: 12,
                 }}
             >All</Chip>
 
-            <Chip onPress={onPressChip}
+            <Chip onPress={() => onPressChip("approved")}
                 mode="outlined"
                 selectedColor="#13B156"
-                style={chipStyle}
+                style={selectedChip === "approved" ? chipSelect : chipNotSelect}
                 textStyle={{
                     fontSize: 12,
                 }}
             >Ongoing</Chip>
 
-            <Chip onPress={onPressChip}
+            <Chip onPress={() => onPressChip("completed")}
                 mode="outlined"
                 selectedColor="#13B156"
-                style={chipStyle}
+                style={selectedChip === "completed" ? chipSelect : chipNotSelect}
                 textStyle={{
                     fontSize: 12,
                 }}
             >Completed</Chip>
 
-            <Chip onPress={onPressChip}
+            <Chip onPress={() => onPressChip("pending")}
                 mode="outlined"
                 selectedColor="#13B156"
-                style={chipStyle}
+                style={selectedChip === "pending" ? chipSelect : chipNotSelect}
                 textStyle={{
                     fontSize: 12,
                 }}

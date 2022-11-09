@@ -1,37 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import PageHeader from '../../components/organization/PageHeader'
 import Micon from 'react-native-vector-icons/MaterialIcons';
+import FAicon from 'react-native-vector-icons/FontAwesome5';
 import HorizontalLine from '../../components/organization/HorizontalLine';
 import VerticalLine from '../../components/organization/VerticalLine';
 import OrgProfileOption from '../../components/organization/OrgProfileOption';
 import VerticleSpace from '../../components/organization/VerticleSpace';
-import { getOrgDashSummary } from '../../api/organization.api';
 
-function OrganizationProfile() {
-    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
-    const [orgSummary, setOrgSummary] = useState({
-        totalFundsAmount: 0,
-        activeFunds: 0,
-        totalDonors: 0,
-    });
-
-    useEffect(() => {
-        getOrgDashSummary(organizationID)
-            .then((res) => {
-                setOrgSummary(res.data.summary);
-            }).catch((err) => {
-                console.log(err);
-            });
-    }, [organizationID]);
-
-    // add comma before every 3 digits and add .00 at the end
-    const numberWithCommas = (x) => {
-        // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
+function OrgProfileView() {
     return (
         <SafeAreaProvider style={{
             flex: 1,
@@ -67,7 +45,7 @@ function OrganizationProfile() {
                 </View>
 
 
-                {/* Organization summary */}
+                {/* Organization details */}
                 <View style={{
                     paddingHorizontal: 20,
                     paddingVertical: 10,
@@ -88,7 +66,7 @@ function OrganizationProfile() {
                             <Text style={{
                                 fontSize: 15,
                                 fontWeight: '700',
-                            }}>{numberWithCommas(orgSummary.totalFundsAmount)}</Text>
+                            }}>145,000</Text>
                             <Text style={{
                                 fontSize: 15,
                             }}>Raised (Rs.)</Text>
@@ -102,7 +80,7 @@ function OrganizationProfile() {
                             <Text style={{
                                 fontSize: 15,
                                 fontWeight: '700',
-                            }}>{orgSummary.activeFunds}</Text>
+                            }}>3</Text>
                             <Text style={{
                                 fontSize: 15,
                             }}>Active Funds</Text>
@@ -116,38 +94,74 @@ function OrganizationProfile() {
                             <Text style={{
                                 fontSize: 15,
                                 fontWeight: '700',
-                            }}>{orgSummary.totalDonors}</Text>
+                            }}>47</Text>
                             <Text style={{
                                 fontSize: 15,
                             }}>Contributors</Text>
                         </View>
                     </View>
-                    <VerticleSpace height={10} />
-                    <HorizontalLine />
 
                     <VerticleSpace height={10} />
+                    <HorizontalLine />
+                    <VerticleSpace height={10} />
 
-                    <OrgProfileOption title="Organization Funds" icon="toll" onPress="OrgFunds" />
-                    <HorizontalLine />
-                    <OrgProfileOption title="Generate Reports" icon="assignment" onPress="orgFunds" />
-                    <HorizontalLine />
-                    <OrgProfileOption title="Edit Organization Details" icon="edit" onPress="updateOrgDetails" />
-                    <HorizontalLine />
-                    <OrgProfileOption title="Edit Member Details" icon="people" onPress="orgFunds" />
-                    <HorizontalLine />
-                    <OrgProfileOption title="Link Social Media" icon="language" onPress="orgFunds" />
-                    <HorizontalLine />
-                    <OrgProfileOption title="Change Password" icon="lock" onPress="orgFunds" />
-                    <HorizontalLine />
-                    <OrgProfileOption title="Logout" icon="logout" onPress="orgFunds" />
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                        <Text style={styles.label}>Address</Text>
+                        <Text style={styles.text}>Welfare road, Kalutara</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', width: '50%' }}>
+                            <Text style={styles.label}>Country</Text>
+                            <Text style={styles.text}>Sri Lanka</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', width: '50%' }}>
+                            <Text style={styles.label}>ZIP Code</Text>
+                            <Text style={styles.text}>12000</Text>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                        <Text style={styles.label}>Email</Text>
+                        <Text style={styles.text}>foodpatron@welfare.com</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                        <Text style={styles.label}>Contact Number</Text>
+                        <Text style={styles.text}>0112756481</Text>
+                    </View>
                     <HorizontalLine />
                 </View>
 
-                <VerticleSpace height={20} />
+                <View style={{ marginLeft: 20 }}>
+                    <Text style={styles.section}>Social Media</Text>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', paddingHorizontal: 30 }}>
+                        <Micon name='facebook' color='#09101D' size={35} />
+                        <FAicon name='instagram-square' color='#09101D' size={35} />
+                        <FAicon name='youtube' color='#09101D' size={35} />
+                    </View>
+                </View>
+
+
 
             </ScrollView>
         </SafeAreaProvider>
     )
 }
 
-export default OrganizationProfile
+const styles = StyleSheet.create({
+    label: {
+        fontSize: 15,
+        fontWeight: '700',
+        width: 80,
+        marginBottom: 10,
+    },
+    text: {
+        fontSize: 15,
+        flex: 1,
+    },
+    section: {
+        fontSize: 16,
+        color: "#09101D",
+        fontWeight: "700",
+    },
+})
+
+export default OrgProfileView

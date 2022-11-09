@@ -62,8 +62,8 @@ const MyDonationCard = ({
           onMark(true);
           markDonationCompleted(donation._id)
             .then((res) => {
-              onMark(false);
               Alert.alert("success", "Donation Successfully Completed");
+              onMark(false);
             })
             .catch((err) => {
               console.log(err.response);

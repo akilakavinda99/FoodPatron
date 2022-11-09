@@ -30,3 +30,9 @@ export const getAcceptedRequests = (donationId) =>
 
 export const deleteDonationRequest = (donationId) =>
   API.delete(`/deleteDonation/${donationId}`);
+
+export const acceptDonationRequest = (requestId) =>
+  API.put(`/acceptRequest/${requestId}`);
+
+export const rejectDonationRequest = (requestId) =>
+  API.put(`/rejectRequest/${requestId}`);

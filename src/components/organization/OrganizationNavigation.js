@@ -84,7 +84,7 @@ function OrganizationNavigation() {
                 }}
             />
             <Tab.Screen
-                name="Profile"
+                name="OrgProfile"
                 component={OrganizationProfile}
                 options={{
                     headerShown: false,

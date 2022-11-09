@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SecondScreen from "./src/screens/secondScreen";
 import HomeScreen from "./src/screens/homeScreen";
 
-
 import DonationView from "./src/screens/donator/donationView";
 import AllDonations from "./src/screens/donator/allDonations";
 import CreateDonation from "./src/screens/donator/createDonation";
@@ -30,6 +29,13 @@ import ViewFundByOrganization from "./src/screens/fund/viewFundByOrganization";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CommonBottomNav from "./src/components/common/commonNav";
 import ViewRequestByOrganization from "./src/screens/request/viewRequestByOrganization";
+import ViewFundByIndividual from "./src/screens/fundsForIndividuals/viewFundByIndividual";
+import ViewAllFunds from "./src/screens/fundsForIndividuals/viewAllFunds";
+import OrgProfileView from "./src/screens/fundsForIndividuals/orgProfileView";
+import DonateFund from "./src/screens/fundsForIndividuals/donateFund";
+import EditFund from "./src/screens/fund/editFund";
+import UpdateOrganizationDetails from "./src/screens/organization/updateOrganizationDetails";
+import ViewFundRequest from "./src/screens/requester/ViewFundRequest";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -85,8 +91,8 @@ export default function App() {
             options={{ headerShown: false }}
           />
           // <Stack.Screen
-          //   name="Home"
-          //   component={MainTabs}
+          //   name="OrgHome"
+          //   component={OrganizationNavigation}
           //   options={{ headerShown: false }}
           // />
         )}
@@ -186,6 +192,41 @@ export default function App() {
         <Stack.Screen
           name="viewRequestByOrg"
           component={ViewRequestByOrganization}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="viewAllFunds"
+          component={ViewAllFunds}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="viewFundByIndividual"
+          component={ViewFundByIndividual}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="orgProfileView"
+          component={OrgProfileView}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="donateFund"
+          component={DonateFund}
+          options={{ title: "Donate" }}
+        />
+        <Stack.Screen
+          name="editFund"
+          component={EditFund}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="updateOrgDetails"
+          component={UpdateOrganizationDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="fundReqView"
+          component={ViewFundRequest}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
