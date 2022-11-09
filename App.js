@@ -47,9 +47,9 @@ export default function App() {
   useEffect(() => {
     async function setData() {
       const appData = await AsyncStorage.getItem("appLaunched");
+      setUserID(await AsyncStorage.getItem("userID"))
       setUserEmail(await AsyncStorage.getItem("userEmail"))
       setUserRole(await AsyncStorage.getItem("userRole"))
-      setUserID(await AsyncStorage.getItem("userID"))
 
       if (appData == null) {
         setFirstLaunch(true);
@@ -68,7 +68,7 @@ export default function App() {
       <Stack.Navigator>
         {firstLaunch ? (
           <Stack.Screen name="first" component={OnboardingScreen} />
-        ) : (userID === null ? (
+        ) : (userID === null || userRole === null ? (
           <Stack.Screen
             name="signIn"
             component={SignIn}

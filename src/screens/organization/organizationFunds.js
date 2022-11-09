@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, RefreshControl, ScrollView, Text } from 'react-native'
@@ -12,7 +13,7 @@ import CustomeSearchBar from '../../components/organization/SearchBar';
 import { getRemainingTime } from '../../utils/getRemainingTime';
 
 function OrganizationFunds({ snackNotification }) {
-    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    // const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
     const isFocused = useIsFocused();
 
     const [funds, setFunds] = useState([]);
@@ -23,17 +24,15 @@ function OrganizationFunds({ snackNotification }) {
     const [refreshing, setRefreshing] = useState(false);
     const [snackBarVisible, setSnackBarVisible] = useState(false);
     const [filterChip, setFilterChip] = useState("");
+    const [organizationID, setOrganizationID] = useState("");
 
-    // useEffect(() => {
-    //     if (snackNotification) {
-    //         setSnackBarVisible(true);
-    //         snackNotification = "";
-    //         route.params.snackNotification = "";
-    //     }
-    // }, [snackNotification, isFocused])
-
+    const getOrgID = async () => {
+        const orgID = await AsyncStorage.getItem("userID");
+        setOrganizationID(orgID);
+    }
 
     useEffect(() => {
+        getOrgID();
         setLoading(true);
         getFundByOrganization(organizationID)
             .then((res) => {
@@ -81,7 +80,7 @@ function OrganizationFunds({ snackNotification }) {
                     marginTop: 10,
                 }}>
                 {loading ? (
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large" color="#13B156" />
                 ) : funds.length == 0 ? (
                     <Text style={{
                         fontSize: 16,

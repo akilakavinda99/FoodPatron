@@ -60,7 +60,7 @@ function OrganizationHome() {
                     marginTop: 10,
                 }}>
                 {loading ? (
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large" color="#13B156" />
                 ) : requests.length == 0 ? (
                     <Text style={{
                         fontSize: 16,

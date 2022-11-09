@@ -15,9 +15,11 @@ import { getFundByID, newFund, updateFund } from '../../api/fund.api'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FAcon from 'react-native-vector-icons/Feather';
 import { getRemainingTime } from '../../utils/getRemainingTime'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 function EditFund({ route }) {
-    const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    // const organizationID = "6336ad5ea9f14b49dbf42f8c"; // for testing
+    // const organizationID = AsyncStorage.getItem("userID")
     const fundID = route.params.fundID;
     const navigation = useNavigation();
     const isFocused = useIsFocused();
@@ -27,6 +29,7 @@ function EditFund({ route }) {
     const [formErrors, setFormErrors] = useState({})
     const [loading, setLoading] = useState(true)
     const [numberOfDonors, setNumberOfDonors] = useState(0)
+    const [organizationID, setOrganizationID] = useState("");
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -89,12 +92,18 @@ function EditFund({ route }) {
         return number + "";
     }
 
+    const getOrgID = async () => {
+        const orgID = await AsyncStorage.getItem("userID");
+        setOrganizationID(orgID);
+    }
+
     useEffect(() => {
         setFundData({})
         setFormErrors({})
         setIsSubmitting(false)
         setSelectedImage(null);
         if (isFocused) {
+            getOrgID();
             getFundDetails()
         }
     }, [isFocused])
@@ -106,7 +115,7 @@ function EditFund({ route }) {
                 height: "100%",
             }}>
                 {loading ? (
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large"  color="#13B156" />
                 ) : (
                     <>
                         <SafeAreaView style={{
