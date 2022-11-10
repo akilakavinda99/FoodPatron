@@ -36,6 +36,7 @@ import UpdateOrganizationDetails from "./src/screens/organization/updateOrganiza
 import ViewFundRequest from "./src/screens/requester/ViewFundRequest";
 import UpdateOrgMemberDetails from "./src/screens/organization/updateOrgMemberDetails";
 import SignIn from "./src/screens/user/signIn";
+import ChangeOrgPassword from "./src/screens/organization/changeOrgPassword";
 
 export default function App() {
   //to show the onboarding screens only at the initial launch
@@ -256,6 +257,11 @@ export default function App() {
         <Stack.Screen
           name="fundReqView"
           component={ViewFundRequest}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="changeOrgPass"
+          component={ChangeOrgPassword}
           options={{ headerShown: false }}
         />
 

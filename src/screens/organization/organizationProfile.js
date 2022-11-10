@@ -160,7 +160,7 @@ function OrganizationProfile() {
                     <HorizontalLine />
                     <OrgProfileOption title="Link Social Media" icon="language" onPress="orgFunds" />
                     <HorizontalLine />
-                    <OrgProfileOption title="Change Password" icon="lock" onPress="orgFunds" />
+                    <OrgProfileOption title="Change Password" icon="lock" onPress="changeOrgPass" />
                     <HorizontalLine />
                     <Pressable onPress={() => {
                         logOut();
