@@ -31,6 +31,7 @@ function ViewFundByIndividual({ navigation, route }) {
     raised,
     budget,
     description,
+    organizationID
   } = route.params;
   const [loading, setLoading] = useState(false);
 
@@ -162,7 +163,10 @@ function ViewFundByIndividual({ navigation, route }) {
           >
             <GradientButton
               text="Donate"
-              onPress={() => navigation.navigate("donateFund")}
+              onPress={() => navigation.navigate("donateFund", {
+                fundID: fundID,
+                organizationID: organizationID
+              })}
             />
           </View>
 

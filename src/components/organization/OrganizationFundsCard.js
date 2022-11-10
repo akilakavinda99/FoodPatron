@@ -3,7 +3,7 @@ import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { ProgressBar, Colors } from 'react-native-paper';
 
-function OrganizationFundsCard({ fundID, title, image, target, donors, daysLeft, raised, budget, description, status, userType }) {
+function OrganizationFundsCard({ fundID, title, image, target, donors, daysLeft, raised, budget, description, status, userType, organizationID }) {
     const navigation = useNavigation();
 
     return (
@@ -32,6 +32,7 @@ function OrganizationFundsCard({ fundID, title, image, target, donors, daysLeft,
                     description: description,
                     fundID: fundID,
                     status: status,
+                    organizationID: organizationID
                 })
             }
         }}>
