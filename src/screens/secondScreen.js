@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { TextInput, IconButton } from "react-native-paper";
+import { TextInput, IconButton, Chip } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import axios from "axios";
@@ -17,6 +17,9 @@ import PascalCase from "../components/PascalCase";
 import DonatorCard from "../components/donator/DonatorCard";
 import { useNavigation } from "@react-navigation/native";
 import { logOut } from "../utils/logout";
+import PageHeader from "../components/organization/PageHeader";
+import CustomeSearchBar from "../components/organization/SearchBar";
+import OrganizationFundsCard from "../components/organization/OrganizationFundsCard";
 
 export default function SecondScreen() {
   const [image, setImage] = useState(null);
@@ -102,182 +105,124 @@ export default function SecondScreen() {
   return (
     <View
       style={{
-        // marginTop: 20,
-        paddingTop: 10,
+        height: "100%",
         backgroundColor: "white",
-        paddingBottom: 20,
       }}
     >
-      <View style={{ flexDirection: "row" }}>
-        <IconButton icon="account-multiple" />
-        <Text
-          style={{
-            marginTop: 15,
-            marginLeft: 100,
-          }}
-        >
-          All donations
-        </Text>
-      </View>
-      <TextInput
-        mode="outlined"
-        activeOutlineColor="black"
-        outlineColor="#9FA5AA"
-        // label="Name"
-        label="Seaxzsssssxrch"
-        left={
-          <TextInput.Icon
-            icon="eye"
-            color="#ADB2B6"
-            style={{
-              paddingTop: 10,
-              // width: 20,
-              // height: 20,
-            }}
-          />
-        }
+      <View
         style={{
-          width: 347,
-          height: 47,
-          marginLeft: 23,
-          backgroundColor: "#F6F6F6",
-        }}
-      ></TextInput>
-
-      <ScrollView
-        // stickyHeaderIndices={[0]}
-        style={{
-          backgroundColor: "#FFFFFF",
-          // marginTop: 10,
-          paddingLeft: 10,
-          paddingTop: 20,
+          flexDirection: "row",
         }}
       >
-        <ActivityIndicator size="large" color="#1FBB61" />
-        {/* <Text
+        <PageHeader title="Food Patron" icon="heart" />
+        <Chip
+          style={{
+            backgroundColor: "#E8F8EF",
+            borderColor: "#13B156",
+            borderWidth: 1,
+            marginHorizontal: 5,
+            marginVertical: 10,
+            width: 88,
+            marginLeft: 30,
+
+            height: 30,
+            marginTop: 40,
+          }}
+        >
+          Register
+        </Chip>
+        <Chip
+          style={{
+            backgroundColor: "#E8F8EF",
+            borderColor: "#13B156",
+            borderWidth: 1,
+            marginHorizontal: 5,
+            marginVertical: 10,
+            width: 78,
+
+            height: 30,
+            marginTop: 40,
+          }}
+        >
+          Log in
+        </Chip>
+      </View>
+      <View
+        style={{
+          marginTop: 20,
+        }}
+      >
+        <CustomeSearchBar
+        // onSearch={(search) => {
+        //   setsearchTerm(search);
+        // }}
+        />
+      </View>
+      <Text
         style={{
           fontWeight: "600",
-          color: "#111010",
-          // marginLeft: "32",
-          paddingLeft: 30,
+          marginTop: 30,
+          marginLeft: 30,
         }}
       >
-        Your Name
+        About us
+      </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          marginLeft: 30,
+          paddingTop: 23,
+        }}
+      >
+        <Image
+          style={{ borderRadius: 8 / 2 }}
+          source={{
+            width: 110,
+            height: 109,
+
+            uri: "https://i.postimg.cc/zD9tgsxm/184282669-happy-volunteers-packing-food-in-donation-boxes.webp",
+          }}
+        />
         <Text
           style={{
-            color: "red",
+            marginLeft: 13,
+            marginRight: 130,
+            fontWeight: "400",
           }}
         >
-          *
+          A non-profit, charitable mobile application that distributes food to
+          those who have difficulty purchasing enough to avoid hunger and
+          provide sustainable agriculture solutions
         </Text>
-      </Text> */}
-        <TextInput
-          mode="outlined"
-          activeOutlineColor="black"
-          outlineColor="#9FA5AA"
-          // label="Name"
-          label="Name"
-          left={
-            <TextInput.Icon
-              icon="eye"
-              color="#ADB2B6"
-              style={
-                {
-                  // paddingTop: 10,
-                  // width: 20,
-                  // height: 20,
-                }
-              }
-            />
-          }
-          style={{
-            width: 347,
-            height: 47,
-            marginLeft: 23,
-            backgroundColor: "white",
-          }}
-        ></TextInput>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
         <Text
           style={{
             fontWeight: "600",
-            color: "#111010",
-            // marginLeft: "32",
-            paddingLeft: 30,
+            marginTop: 30,
+            marginLeft: 30,
           }}
         >
-          Your Name
-          <Text
-            style={{
-              color: "red",
-            }}
-          >
-            *
-          </Text>
+          Featured Events
         </Text>
-        <TextInput
-          mode="outlined"
-          activeOutlineColor="black"
-          outlineColor="#9FA5AA"
-          // label="Name"
-          // label="Name"
-          placeholder="NAme"
-          left={
-            <TextInput.Icon
-              icon="eye"
-              color="#ADB2B6"
-              style={{
-                paddingTop: 10,
-              }}
-            />
-          }
+        <Text
           style={{
-            width: 347,
-            height: 47,
-            marginLeft: 23,
-            backgroundColor: "white",
+            fontWeight: "600",
+            marginTop: 30,
+            marginRight: 50,
+            color: "#4D8BDB",
+            // marginLeft: 30,
           }}
-        ></TextInput>
-
-        {/* <Text>Dsd</Text>
-
-      <Text>Dsd</Text>
-      <Text>Dsd</Text>
-      <Text>Dsd</Text> */}
-
-        <Button title="Go back" onPress={() => {
-          logOut()
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'signInIn' }],
-          });
-        }} />
-        {/* <View style={styles.centering}>
-        <LinearGradient
-          // Button Linear Gradient
-          colors={["rgba(19, 177, 86, 1)", "rgba(50, 203, 115, 1)"]}
-          style={styles.button}
         >
-          <Text style={styles.text}>Send Request</Text>
-        </LinearGradient>
-      </View> */}
-        <PascalCase />
-        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
-        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
-
-        <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Button title="Pick an image from camera roll" onPress={pickImage} />
-          {image && (
-            <Image
-              source={{ uri: image }}
-              style={{ width: 200, height: 200 }}
-            />
-          )}
-        </View>
-        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
-        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
-        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
-        <DonatorCard imageUrl="https://i.postimg.cc/8sgfPncS/Food-Donation-For-100-Children.png" />
-      </ScrollView>
+          See More
+        </Text>
+      </View>
+      <View>{/* <OrganizationFundsCard /> */}</View>
     </View>
   );
 }
