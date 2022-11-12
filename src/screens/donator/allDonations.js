@@ -5,10 +5,11 @@ import { getHomeDonations } from "../../api/donator.api";
 import { getAllDonations } from "../../api/home.api";
 import DonatorCard from "../../components/donator/DonatorCard";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import allDonationStyles from "./styles/AllDonationStyles";
 
 const AllDonations = () => {
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
@@ -30,7 +31,7 @@ const AllDonations = () => {
         Alert.alert("An Error Occoured");
         console.log(err.response);
       });
-  }, []);
+  }, [isFocused]);
 
   // Search function
   useEffect(() => {
@@ -81,7 +82,8 @@ const AllDonations = () => {
         activeOutlineColor="black"
         outlineColor="#9FA5AA"
         // label="Name"
-        label="Search"
+        // label="Search"
+        placeholder="Search"
         onChangeText={(value) => setsearchTerm(value)}
         left={
           <TextInput.Icon
@@ -103,7 +105,15 @@ const AllDonations = () => {
         ) : donations.length == 0 ? (
           <Text>No items</Text>
         ) : donations.length > 0 && showingFunds.length == 0 ? (
-          <Text>No search results</Text>
+          <Text
+            style={{
+              textAlign: "center",
+              fontWeight: "bold",
+              marginTop: 200,
+            }}
+          >
+            No search results
+          </Text>
         ) : (
           <>
             <ScrollView style={{ marginBottom: 150 }}>

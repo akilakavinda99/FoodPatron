@@ -205,7 +205,7 @@ const EditDonation = ({ route }) => {
           backgroundColor: "green",
         }}
       >
-        Create Donation
+        Edit Donation
       </Button>
     </ScrollView>
   );

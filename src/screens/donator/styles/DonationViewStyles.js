@@ -26,6 +26,7 @@ const donationViewStyles = StyleSheet.create({
     width: 287,
     height: 120,
     marginTop: 20,
+    elevation: 10,
   },
 
   contactRow: {

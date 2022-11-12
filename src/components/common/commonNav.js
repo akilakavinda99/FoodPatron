@@ -7,6 +7,7 @@ import AllDonations from "../../screens/donator/allDonations";
 import ViewAllFunds from "../../screens/fundsForIndividuals/viewAllFunds";
 import SecondScreen from "../../screens/secondScreen";
 import AllRequests from "../../screens/requester/allRequests";
+import Profile from "../../screens/user/profile";
 
 const CommonBottomNav = () => {
   const Tab = createBottomTabNavigator();
@@ -74,13 +75,13 @@ const CommonBottomNav = () => {
           tabBarIcon: ({ color, size, focused }) =>
             focused ? (
               <MIcon
-                name="hand-heart-outline"
+                name="bank"
                 color="#13B156"
                 size={size}
                 style={styles.iconStyles}
               />
             ) : (
-              <MIcon name="hand-heart-outline" color="#13B156" size={size} />
+              <MIcon name="bank" color="#13B156" size={size} />
             ),
           tabBarLabelStyle: {
             color: "#13B156",
@@ -103,6 +104,32 @@ const CommonBottomNav = () => {
               />
             ) : (
               <MIcon name="hand-heart-outline" color="#13B156" size={size} />
+            ),
+          tabBarLabelStyle: {
+            color: "#13B156",
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+          title: "Profile",
+          tabBarIcon: ({ color, size, focused }) =>
+            focused ? (
+              <MIcon
+                name="account-circle-outline"
+                color="#13B156"
+                size={size}
+                style={styles.iconStyles}
+              />
+            ) : (
+              <MIcon
+                name="account-circle-outline"
+                color="#13B156"
+                size={size}
+              />
             ),
           tabBarLabelStyle: {
             color: "#13B156",
