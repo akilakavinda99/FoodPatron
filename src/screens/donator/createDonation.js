@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,9 +12,11 @@ import {
 import { Button, Checkbox, TextInput } from "react-native-paper";
 import { createDonationRequest } from "../../api/donator.api";
 import CreateDonationInput from "../../components/donator/CreateDonationInput";
+import { DonationValidation } from "../../components/donator/DonationValidation";
 import ImageUpload from "../../components/donator/ImageUpload";
 import InputName from "../../components/donator/InputName";
 import pickImage from "../../utils/imageConverter";
+import ViewFundStyles from "../fund/styles/ViewFundStyles";
 import createDonationStyles from "./styles/CreateDonationStyles";
 
 const CreateDonation = () => {
@@ -26,6 +28,8 @@ const CreateDonation = () => {
   const [donationDescription, setDescription] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [checked, setChecked] = useState(false);
+  const [formErrors, setFormErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // function to pick image.
   const pickImageFromGallery = () => {
@@ -50,16 +54,37 @@ const CreateDonation = () => {
       shareContactDetails: checked,
     };
 
-    await createDonationRequest(donation)
-      .then((res) => {
-        Alert.alert("Sucess", res.data.message, [
-          { text: "OK", onPress: () => navigation.goBack() },
-        ]);
-      })
-      .catch((err) => {
-        Alert.alert("Error", err.response);
-      });
+    setFormErrors(DonationValidation(donation))
+    setIsSubmitting(true)
   };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmitting) {
+      const donation = {
+        userID: 12133,
+        donationTitle,
+        email,
+        contactNumber,
+        donationDescription,
+        location,
+        donationImage: selectedImage,
+        shareContactDetails: checked,
+      };
+      createDonationRequest(donation)
+        .then((res) => {
+          Alert.alert("Sucess", res.data.message, [
+            { text: "OK", onPress: () => navigation.goBack() },
+          ]);
+        })
+        .catch((err) => {
+          Alert.alert("Error", err.response);
+        });
+      setIsSubmitting(false)
+    } else {
+      setIsSubmitting(false)
+    }
+  }, [formErrors, isSubmitting])
+
   return (
     <ScrollView style={createDonationStyles.scrollView}>
       <InputName text="Donation Title" />
@@ -70,23 +95,26 @@ const CreateDonation = () => {
         length={30}
         onChangeText={(value) => setDonationTitle(value)}
       />
-      <InputName text="Your Name" />
+      <Text style={ViewFundStyles.errorText}>{formErrors.donationTitle}</Text>
 
+      <InputName text="Location" />
       <CreateDonationInput
         placeholder="Location"
         icon="account"
         onChangeText={(value) => setLocation(value)}
       />
-      <InputName text="Your Email" />
+      <Text style={ViewFundStyles.errorText}>{formErrors.location}</Text>
 
+      <InputName text="Your Email" />
       <CreateDonationInput
         placeholder="Your Email"
         icon="email"
         type="email-address"
         onChangeText={(value) => setEmail(value)}
       />
-      <InputName text="Your Contact Number" />
+      <Text style={ViewFundStyles.errorText}>{formErrors.email}</Text>
 
+      <InputName text="Your Contact Number" />
       <CreateDonationInput
         placeholder="Your Contact Number"
         icon="phone"
@@ -95,6 +123,8 @@ const CreateDonation = () => {
         minLength={10}
         onChangeText={(value) => setNumber(value)}
       />
+      <Text style={ViewFundStyles.errorText}>{formErrors.contactNumber}</Text>
+
       <InputName text="Describe Your Donation" />
       <TextInput
         mode="outlined"
@@ -104,6 +134,8 @@ const CreateDonation = () => {
         style={createDonationStyles.descriptionInput}
         onChangeText={(value) => setDescription(value)}
       />
+      <Text style={ViewFundStyles.errorText}>{formErrors.donationDescription}</Text>
+
       <InputName text="Donation Image" />
       <View style={createDonationStyles.imageRow}>
         <TouchableOpacity onPress={pickImageFromGallery}>
@@ -120,6 +152,8 @@ const CreateDonation = () => {
           <></>
         )}
       </View>
+      <Text style={ViewFundStyles.errorText}>{formErrors.donationImage}</Text>
+
       <View style={createDonationStyles.imageRow}>
         <View style={createDonationStyles.checkBoxView}>
           <Checkbox
@@ -134,12 +168,14 @@ const CreateDonation = () => {
           Do you want to share your contact info?
         </Text>
       </View>
+
       <Text style={createDonationStyles.sharetext3}>
         If unticked only the requests you approve will
       </Text>
       <Text style={createDonationStyles.sharetext2}>
         able to view your contact details
       </Text>
+
       <Button
         mode="contained"
         onPress={createDonation}
