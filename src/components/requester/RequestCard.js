@@ -17,7 +17,7 @@ export default function RequestCard(props) {
           marginVertical: 10,
           marginHorizontal: 20,
           flexDirection: "row",
-          height: 130,
+          height: 138,
           elevation: 5,
           borderColor: "#E8E8E8",
         }}
@@ -25,7 +25,7 @@ export default function RequestCard(props) {
         <Image
           style={{
             flex: 1,
-            height: 130,
+            height: 138,
             borderRadius: 10,
             maxWidth: 117,
           }}

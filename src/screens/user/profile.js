@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Micon from "react-native-vector-icons/MaterialIcons";
 import Eicon from "react-native-vector-icons/Entypo";
@@ -8,8 +8,12 @@ import HorizontalLine from "../../components/organization/HorizontalLine";
 import VerticleSpace from "../../components/organization/VerticleSpace";
 import OrgProfileOption from "../../components/organization/OrgProfileOption";
 import PageHeader from "../../components/organization/PageHeader";
+import MIcon from 'react-native-vector-icons/MaterialIcons';
+import { logOut } from "../../utils/logout";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Profile() {
+  const navigation = useNavigation();
   return (
     <SafeAreaProvider
       style={{
@@ -66,7 +70,7 @@ export default function Profile() {
               fontWeight: "600",
             }}
           >
-            Thushal Shaminda
+            Akila Kavinda
           </Text>
 
           <VerticleSpace height={10} />
@@ -90,7 +94,37 @@ export default function Profile() {
             <HorizontalLine />
             <OrgProfileOption title="Change Password" icon="lock" />
             <HorizontalLine />
-            <OrgProfileOption title="Logout" icon="logout" />
+            {/* <OrgProfileOption title="Logout" icon="logout" /> */}
+            <Pressable onPress={() => {
+                        logOut();
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'signInIn' }],
+                        });
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            paddingVertical: 10,
+                            paddingHorizontal: 10,
+
+                        }}>
+                            <Text style={{
+                                fontSize: 16,
+                                fontWeight: '700',
+                            }}>Logout</Text>
+                            <View style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: '#FFE8ED',
+                                borderRadius: 50,
+                                padding: 5,
+                            }}>
+                                <MIcon name='logout' size={24} color="#FF395E" />
+                            </View>
+                        </View>
+                    </Pressable>
             <HorizontalLine />
 
             <VerticleSpace height={10} />

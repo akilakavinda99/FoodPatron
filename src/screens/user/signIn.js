@@ -9,6 +9,7 @@ import {
     View,
     Image,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native'
 import { userSignIn } from '../../api/user.api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -161,12 +162,14 @@ const SignIn = () => {
                             fontSize: 15,
                             color: "#56616F",
                         }}>Don't have an account?</Text>
-                        <Text style={{
-                            fontSize: 15,
-                            color: "#13B156",
-                            fontWeight: "bold",
-                            paddingHorizontal: 5,
-                        }}>Sign up</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+                            <Text style={{
+                                fontSize: 15,
+                                color: "#13B156",
+                                fontWeight: "bold",
+                                paddingHorizontal: 5,
+                            }}>Sign up</Text>
+                        </TouchableOpacity>
 
                     </View>
                 </>)}

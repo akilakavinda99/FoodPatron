@@ -57,14 +57,14 @@ export default function ViewFundRequest({ route }) {
                 marginRight: 20,
               }}
             >
-              <FAcon name="edit" color="#13B156" size={24} />
+              {/* <FAcon name="edit" color="#13B156" size={24} />
             </Pressable>
             <Pressable
               onPress={() => {
                 navigation.navigate("deleteFund");
               }}
             >
-              <FAcon name="trash" color="#FF395E" size={24} />
+              <FAcon name="trash" color="#FF395E" size={24} /> */}
             </Pressable>
           </View>
         </View>
