@@ -110,7 +110,7 @@ const MyDonationCard = ({
                   Delete
                 </Chip>
               </>
-            ) : (
+            ) : status == "active" ? (
               <>
                 <Chip
                   icon={() => (
@@ -124,6 +124,36 @@ const MyDonationCard = ({
                   style={myDonationCardStyles.completedChip}
                 >
                   Mark as Completed
+                </Chip>
+                <View style={{ flexDirection: "row" }}>
+                  <Chip
+                    icon={() => (
+                      <Icon name="delete-outline" size={20} color="red" />
+                    )}
+                    onPress={deleteDonation}
+                    style={myDonationCardStyles.deleteChip}
+                  >
+                    Delete
+                  </Chip>
+                  <Chip
+                    icon="square-edit-outline"
+                    onPress={navigateToEdit}
+                    style={myDonationCardStyles.editChip}
+                  >
+                    Edit
+                  </Chip>
+                </View>
+              </>
+            ) : (
+              <>
+                <Chip
+                  icon={() => (
+                    <Icon name="clock-alert-outline" size={20} color="orange" />
+                  )}
+                  onPress={() => console.log("pres")}
+                  style={myDonationCardStyles.completedChip}
+                >
+                  Under review
                 </Chip>
                 <View style={{ flexDirection: "row" }}>
                   <Chip

@@ -72,7 +72,15 @@ const PendingReqView = ({ route }) => {
         </>
       ) : donations.length == 0 ? (
         <>
-          <Text>NO Items</Text>
+          <Text
+            style={{
+              textAlign: "center",
+              marginTop: 250,
+              fontSize: 20,
+            }}
+          >
+            No requests available
+          </Text>
         </>
       ) : (
         <ScrollView style={pendingReqViewStyles.scrollView}>
@@ -86,6 +94,7 @@ const PendingReqView = ({ route }) => {
                 fromAccepted={fromAccepted}
                 donationId={donation._id}
                 onChangeReq={(value) => setOnChange(value)}
+                key={donation._id}
               />
             );
           })}

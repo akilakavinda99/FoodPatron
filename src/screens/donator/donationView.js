@@ -36,7 +36,7 @@ export default function DonationView({ route }) {
   }, []);
 
   const navigateToSendRequest = () => {
-    navigation.navigate("donationDashboard", { donationID: donation._id });
+    navigation.navigate("sendRequest", { donationID: donation._id });
   };
 
   return (
@@ -59,7 +59,13 @@ export default function DonationView({ route }) {
               <Text>{donation.donationDescription}</Text>
             </View>
             <View style={donationViewStyles.contactView}>
-              <Text style={{ textAlign: "center", fontSize: 16 }}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
                 Contact Details
               </Text>
               {donation.shareContactDetails ? (
