@@ -7,9 +7,14 @@ import {
     View,
     ScrollView,
     Image,
+    TouchableOpacity,
 } from 'react-native'
+import { Checkbox } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+
 
 const SignUp = () => {
+    const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checked, setChecked] = useState(false);
@@ -66,33 +71,41 @@ const SignUp = () => {
             <FormTextInput 
                 title="Password" 
                 placeholder="Password" 
+                secureTextEntry={true}
                 required={true} 
                 />     
 
             <View
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    paddingHorizontal: 20,
-                    paddingTop: 10,
-                }}
-            >    
-                <FormCheckBox
-                    title="Remember me"
-                    // checked={checked}
-                    // onPress={() => setChecked(!checked)}
-                />
-            </View>
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            // justifyContent: "space-between",
+                            paddingHorizontal: 20,
+                            paddingTop: 10,
+                        }}>
+                        <Checkbox
+                            color="#13B156"
+                            uncheckedColor="#13B156"
+                            // title="Remember me"
+                            status={checked ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked(!checked)}
+                        />
+                        <Text style={{
+                            color: "#000000",
+                            fontSize: 15,
+                            fontWeight: "bold",
+                        }}>I agree with Terms and Conditions and Privacy Policies.</Text>
+                    </View>
+          
+                <View style={{
+                        height: 55,
+                        paddingHorizontal: 20,
+                        marginVertical: 24,
+                    }}>
 
-            <View style={{
-                    height: 55,
-                    paddingHorizontal: 20,
-                    marginVertical: 24,
-                }}>
-
-                <GradientButton text="Sign un" />
-            </View>
+                    <GradientButton text="Sign up" onPress={() => navigation.navigate("signInIn")}/>
+                </View>
+            
 
             <View style={{
                 flexDirection: "row",
@@ -104,12 +117,14 @@ const SignUp = () => {
                     fontSize: 16,
                     color: "#56616F",
                 }}>Already have an account?</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("signInIn")}>
                 <Text style={{
                     fontSize: 16,
                     color: "#13B156",
                     fontWeight: "bold",
                     paddingHorizontal: 5,
-                }}>Sign in</Text>
+                }}>Sign in</Text>   
+                </TouchableOpacity>
 
             </View>
             
